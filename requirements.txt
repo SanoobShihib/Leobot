@@ -1,4 +1,4 @@
-git+https://github.com/agronholm/anyio
+anyio
 tgcrypto
 aiohttp
 pymongo[srv]==4.3.3
@@ -6,9 +6,8 @@ marshmallow==3.19.0
 motor==3.1.1
 umongo==3.1.0
 requests
-bs4
-git+https://github.com/Joelkb/cinemagoer 
 datetime
 psutil
 python-dotenv
 pyrofork==2.3.43
+Pillow
