@@ -11,3 +11,5 @@ psutil
 python-dotenv
 pyrofork==2.3.43
 Pillow
+cinemagoer
+bs4
