@@ -5,7 +5,7 @@ Here You Can Request Movie's, Just Sent <a href='https://t.me/mcu_Mammootty_bot'
 
 Fᴏʀ Mᴏʀᴇ Dᴇᴛᴀɪʟꜱ Cʟɪᴄᴋ /help
 
-Cᴏɴᴛᴀᴄᴛ Bᴏᴛ Dᴇᴠᴇʟᴏᴘᴇʀ (Oʀ) Rᴇᴘᴏʀᴛ Bᴜɢꜱ..!! 👉 @MCU_ADMIN_V1_BOT</b>"""
+Cᴏɴᴛᴀᴄᴛ Bᴏᴛ Dᴇᴠᴇʟᴏᴘᴇʀ (Oʀ) Rᴇᴘᴏʀᴛ Bᴜɢꜱ..!! 👉 @Sanoobshihab</b>"""
 
     STATUS_TXT = """★ 𝚃𝙾𝚃𝙰𝙻 𝙵𝙸𝙻𝙴𝚂: <code>{}</code>
 ★ 𝚃𝙾𝚃𝙰𝙻 𝚄𝚂𝙴𝚁𝚂: <code>{}</code>
@@ -44,7 +44,7 @@ Name - {}
 {file_caption}
 
 ╔═══ ᴊᴏɪɴ ᴡɪᴛʜ ᴜs ═══╗ 
-➲ <a href='t.me/MCUupdatesLINKS'>@OTT UPDTES</a>
-➲ <a href='https://t.me/+uA5gEKm8WXk1ZTll'>@MAIN CHANNEL</a>
+➲ <a href='t.me/MCUupdatesLINKS'>https://t.me/+lpjZQF-rEQ9iZGY1</a>
+➲ <a href='https://t.me/+lpjZQF-rEQ9iZGY1'>@MAIN CHANNEL</a>
 ╚═══ ᴊᴏɪɴ ᴡɪᴛʜ ᴜs ═══╝
 </b>"""
