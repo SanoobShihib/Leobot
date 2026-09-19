@@ -472,7 +472,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         buttons = [
                InlineKeyboardButton('🎥 𝐌𝐚𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥', url=f'https://t.me/Clmainchannel')
                ],[
-                InlineKeyboardButton('⚓️ Oᴛᴛ Iɴsᴛᴀɢʀᴀᴍ Cʜᴀɴɴᴇʟ ⚓️', url=f'https://www.instagram.com/new_ott__updates?igsh=enI5ZzIzcXkzd3Bl')
+                InlineKeyboardButton('👥 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 👥', url=f'https://t.me/+Ik14BdOewjQzYjI1')
               ],[
                 InlineKeyboardButton('👥 𝐒𝐮𝐩𝐩𝐨𝐫𝐭 𝐆𝐫𝐨𝐮𝐩 👥', url="https://t.me/MCUupdatesLINKS"),
         ]       
