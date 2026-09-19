@@ -76,9 +76,9 @@ async def send_file(client, query, ident, file_id):
     if f_caption is None:
         f_cation = f"{title}"
     inline_keyboard = [[
-            InlineKeyboardButton('🖥 Oᴛᴛ Uᴩᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ 🖥', url=f'https://t.me/MCUupdatesLINKS')
+            InlineKeyboardButton('🎥 𝐌𝐚𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥', url=f'https://t.me/Clmainchannel')
             ],[     
-            InlineKeyboardButton('⚙ Lᴀᴛᴇꜱᴛ Mᴏᴠɪᴇ Rᴇʟᴇᴀꜱᴇꜱ ⚙', url='https://t.me/+uA5gEKm8WXk1ZTll')
+            InlineKeyboardButton('👥 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 👥', url='https://t.me/+Ik14BdOewjQzYjI1')
     ]]
     reply_markup = InlineKeyboardMarkup(inline_keyboard)
     ok = await client.send_cached_media(
