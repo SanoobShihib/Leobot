@@ -408,7 +408,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             protect_content=True if ident == "checksubp" else False,
             reply_markup=InlineKeyboardMarkup(
                [[
-                InlineKeyboardButton(🎥 𝐌𝐚𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥', url='https://t.me/Clmainchannel')
+                InlineKeyboardButton('🎥 𝐌𝐚𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥', url='https://t.me/Clmainchannel')
             ],[
                InlineKeyboardButton('👥 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 👥', url='https://t.me/+Ik14BdOewjQzYjI1')
                ]]
