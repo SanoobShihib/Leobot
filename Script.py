@@ -1,11 +1,11 @@
 class script(object):
-    START_TXT = """<b>𝖧𝖾𝗒 {}, 𝖨 𝖠𝗆 <a href=https://t.me/{}>{}</a>, 𝖧𝖺𝗉𝗉𝗒 🖤 𝖳𝗈 𝖧𝖺𝗏𝖾 𝖸𝗈𝗎
+    START_TXT = """<b>𝐇𝐞𝐲 {}, 𝐈 𝐀𝐦 <a href=https://t.me/{}>{}</a>, 𝐇𝐚𝐩𝐩𝐲 🖤 𝐓𝐨 𝐇𝐚𝐯𝐞 𝐘𝐨𝐮
 
-Here You Can Request Movie's, Just Sent <a href='https://t.me/mcu_Mammootty_bot'>Movie Name</a> With Proper <a href='https://www.google.com/'>Google</a> Spelling..!!
+𝐇𝐞𝐫𝐞 𝐘𝐨𝐮 𝐂𝐚𝐧 𝐑𝐞𝐪𝐮𝐞𝐬𝐭 𝐌𝐨𝐯𝐢𝐞'𝐬, 𝐉𝐮𝐬𝐭 𝐒𝐞𝐧𝐭 <a href='https://t.me/Leofans_bot'>Movie Name</a> 𝐖𝐢𝐭𝐡 𝐏𝐫𝐨𝐩𝐞𝐫 <a href='https://www.google.com/'>Google</a> 𝐒𝐩𝐞𝐥𝐥𝐢𝐧𝐠..!!
 
-Fᴏʀ Mᴏʀᴇ Dᴇᴛᴀɪʟꜱ Cʟɪᴄᴋ /help
+𝐅𝐨𝐫 𝐌𝐨𝐫𝐞 𝐃𝐞𝐭𝐚𝐢𝐥𝐬 𝐂𝐥𝐢𝐜𝐤 /help
 
-Cᴏɴᴛᴀᴄᴛ Bᴏᴛ Dᴇᴠᴇʟᴏᴘᴇʀ (Oʀ) Rᴇᴘᴏʀᴛ Bᴜɢꜱ..!! 👉 @Sanoobshihab</b>"""
+𝐂𝐨𝐧𝐭𝐚𝐜𝐭 𝐁𝐨𝐭 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 (𝐎𝐫) 𝐑𝐞𝐩𝐨𝐫𝐭 𝐁𝐮𝐠𝐬..!! 👉 @Sanoobshihab</b>"""
 
     STATUS_TXT = """★ 𝚃𝙾𝚃𝙰𝙻 𝙵𝙸𝙻𝙴𝚂: <code>{}</code>
 ★ 𝚃𝙾𝚃𝙰𝙻 𝚄𝚂𝙴𝚁𝚂: <code>{}</code>
@@ -39,12 +39,12 @@ Added By - {}
 ID - <code>{}</code>
 Name - {}
 """
-    CUSTOM_FILE_CAPTION = """<b>𝐻𝑒𝑙𝑙𝑜 👋 {mention} 😍
+    CUSTOM_FILE_CAPTION = """<b>𝐇𝐚𝐢 👋 {mention} 😍
     
 {file_caption}
 
 ╔═══ ᴊᴏɪɴ ᴡɪᴛʜ ᴜs ═══╗ 
-➲ <a href='t.me/MCUupdatesLINKS'>https://t.me/+lpjZQF-rEQ9iZGY1</a>
-➲ <a href='https://t.me/+lpjZQF-rEQ9iZGY1'>@MAIN CHANNEL</a>
+➲ <a href='t.me/Clmainchannel'>https://t.me/+Ik14BdOewjQzYjI1</a>
+➲ <a href='https://t.me/Clmainchannel'>MAIN CHANNEL</a>
 ╚═══ ᴊᴏɪɴ ᴡɪᴛʜ ᴜs ═══╝
 </b>"""
