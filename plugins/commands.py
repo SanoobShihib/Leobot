@@ -11,7 +11,7 @@ from asyncio import sleep
 from pyrogram.enums import ChatType
 from database.ia_filterdb import Media, Mediaa, get_file_details, unpack_new_file_id, delete_files_below_threshold
 from database.users_chats_db import db
-from info import CHANNELS, ADMINS, REQ_CHANNEL1, REQ_CHANNEL2, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT, DATABASE_URI, DATABASE_NAME
+from info import CHANNELS, ADMINS, REQ_CHANNEL1, REQ_CHANNEL2, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT, DATABASE_URI, DATABASE_NAME, START_IMG, START_VID
 from utils import get_settings, get_size, is_subscribed, is_requested_one, is_requested_two, save_group_settings, temp, check_loop_sub, check_loop_sub1, check_loop_sub2
 from database.connections_mdb import active_connection
 from plugins.pm_filter import auto_filter
@@ -110,7 +110,8 @@ async def start(client, message):
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
-    if len(message.command) != 2:
+    # For Achu Vj
+    if len(message.command) != 2 or message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [
                 InlineKeyboardButton('👥 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 👥', url=f'https://t.me/+Ik14BdOewjQzYjI1')
                ],[
@@ -119,12 +120,31 @@ async def start(client, message):
                 InlineKeyboardButton('👥 𝐒𝐮𝐩𝐩𝐨𝐫𝐭 𝐆𝐫𝐨𝐮𝐩 👥', url="https://t.me/+hl_Pkp8qUOsxMmY1"),
         ]       
         reply_markup = InlineKeyboardMarkup(buttons)
-        await message.reply_video(
-            video="https://envs.sh/_O0.mp4",
-            caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
+        caption_text = script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME)
+        
+        try:           
+            await message.reply_video(
+                video=START_VID,
+                caption=caption_text,
+                reply_markup=reply_markup,
+                parse_mode=enums.ParseMode.HTML
+            )
+        except Exception as video_error:
+            logger.error(f"Achu മോനെ Video work ആയില്ല, കാരണം: {video_error}")
+            try:               
+                await message.reply_photo(
+                    photo=START_IMG,
+                    caption=caption_text,
+                    reply_markup=reply_markup,
+                    parse_mode=enums.ParseMode.HTML
+                )
+            except Exception as photo_error:
+                logger.error(f"Photo-യും മൂഞ്ചി, കാരണം: {photo_error}")                
+                await message.reply_text(
+                    text=caption_text,
+                    reply_markup=reply_markup,
+                    parse_mode=enums.ParseMode.HTML
+                )
         return
     if REQ_CHANNEL1 and not await is_requested_one(client, message):
         btn = [[
