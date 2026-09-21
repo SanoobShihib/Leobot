@@ -18,6 +18,10 @@ API_ID = int(environ.get("API_ID", ""))
 API_HASH = environ.get("API_HASH", "")
 BOT_TOKEN = environ.get("BOT_TOKEN", "")
 
+# For Achu Vj
+START_IMG = environ.get('START_IMG', "")
+START_VID = environ.get('START_VID', "")
+
 # Bot settings
 CACHE_TIME = int(environ.get('CACHE_TIME', 300))
 USE_CAPTION_FILTER = bool(environ.get('USE_CAPTION_FILTER', False))
