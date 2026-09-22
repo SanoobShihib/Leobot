@@ -41,7 +41,7 @@ Name - {}
 """
     CUSTOM_FILE_CAPTION = """<b>𝐇𝐚𝐢 👋 {mention} 😍
     
-{file_caption}
+{file_name}
 
 ╔═══ ᴊᴏɪɴ ᴡɪᴛʜ ᴜs ═══╗ 
 ➲ <a href='t.me/Clmainchannel'>https://t.me/+Ik14BdOewjQzYjI1</a>
