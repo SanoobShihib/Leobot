@@ -113,12 +113,11 @@ async def start(client, message):
     # For Achu Vj
     if len(message.command) != 2 or message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [
-                InlineKeyboardButton('👥 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 👥', url=f'https://t.me/+Ik14BdOewjQzYjI1')
-               ],[
-                InlineKeyboardButton('🎥 𝐌𝐚𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥', url=f'https://t.me/Clmainchannel')
-              ],[
-                InlineKeyboardButton('👥 𝐒𝐮𝐩𝐩𝐨𝐫𝐭 𝐆𝐫𝐨𝐮𝐩 👥', url="https://t.me/+hl_Pkp8qUOsxMmY1"),
-        ]       
+    [InlineKeyboardButton('👥 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 👥', url='https://t.me/+Ik14BdOewjQzYjI1')],
+    [InlineKeyboardButton('🎥 𝐌𝐚𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥', url='https://t.me/Clmainchannel')],
+    [InlineKeyboardButton('👥 𝐒𝐮𝐩ᴘᴏʀᴛ 𝐆ʀᴏᴜᴘ 👥', url='https://t.me/+hl_Pkp8qUOsxMmY1')],
+    [InlineKeyboardButton('❓ 𝐇𝐞𝐥𝐩', callback_data='open_help')]
+        ]     
         reply_markup = InlineKeyboardMarkup(buttons)
         caption_text = script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME)
         
