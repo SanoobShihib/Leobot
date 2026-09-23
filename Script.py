@@ -3,8 +3,6 @@ class script(object):
 
 𝐇𝐞𝐫𝐞 𝐘𝐨𝐮 𝐂𝐚𝐧 𝐑𝐞𝐪𝐮𝐞𝐬𝐭 𝐌𝐨𝐯𝐢𝐞'𝐬, 𝐉𝐮𝐬𝐭 𝐒𝐞𝐧𝐭 <a href='https://t.me/Leofans_bot'>Movie Name</a> 𝐖𝐢𝐭𝐡 𝐏𝐫𝐨𝐩𝐞𝐫 <a href='https://www.google.com/'>Google</a> 𝐒𝐩𝐞𝐥𝐥𝐢𝐧𝐠..!!
 
-𝐅𝐨𝐫 𝐌𝐨𝐫𝐞 𝐃𝐞𝐭𝐚𝐢𝐥𝐬 𝐂𝐥𝐢𝐜𝐤 /help
-
 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 𝐁𝐨𝐭 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 (𝐎𝐫) 𝐑𝐞𝐩𝐨𝐫𝐭 𝐁𝐮𝐠𝐬..!! 👉 @Sanoobshihab</b>"""
 
     STATUS_TXT = """★ 𝚃𝙾𝚃𝙰𝙻 𝙵𝙸𝙻𝙴𝚂: <code>{}</code>
