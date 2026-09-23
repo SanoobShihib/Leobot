@@ -45,7 +45,49 @@ Cᴏɴᴛᴀᴄᴛ Bᴏᴛ Dᴇᴠᴇʟᴏᴘᴇʀ
 """
 
 
+# =========================================================
+# Start Menu Help Button
+# =========================================================
+
+@Client.on_callback_query(filters.regex("^open_help$"))
+async def open_help(client, query):
+
+    buttons = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    "📖 How To Use",
+                    callback_data="help_howto"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    "👨‍💻 Developer",
+                    url="https://t.me/clsupportgroup"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    "🔙 Close",
+                    callback_data="help_close"
+                )
+            ]
+        ]
+    )
+
+    await query.message.edit_text(
+        "<b>👋 Welcome to Help Menu!</b>\n\n"
+        "Choose an option below 👇",
+        reply_markup=buttons
+    )
+
+    await query.answer()
+
+
+# =========================================================
 # /help command
+# =========================================================
+
 @Client.on_message(filters.command("help"))
 async def generate_link(client, message):
 
@@ -79,7 +121,10 @@ async def generate_link(client, message):
     )
 
 
-# How To Use button
+# =========================================================
+# How To Use Button
+# =========================================================
+
 @Client.on_callback_query(filters.regex("^help_howto$"))
 async def help_howto(client, query):
 
@@ -102,7 +147,10 @@ async def help_howto(client, query):
     await query.answer()
 
 
-# Back button
+# =========================================================
+# Back Button
+# =========================================================
+
 @Client.on_callback_query(filters.regex("^help_back$"))
 async def help_back(client, query):
 
@@ -138,7 +186,10 @@ async def help_back(client, query):
     await query.answer()
 
 
-# Close button
+# =========================================================
+# Close Button
+# =========================================================
+
 @Client.on_callback_query(filters.regex("^help_close$"))
 async def help_close(client, query):
 
