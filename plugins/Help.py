@@ -139,10 +139,16 @@ async def help_howto(client, query):
         ]
     )
 
-    await query.message.edit_text(
-        HELP_TEXT,
-        reply_markup=buttons
-    )
+    # 🟢 FIX START
+    try:
+        await query.message.edit_text(
+            HELP_TEXT,
+            reply_markup=buttons
+        )
+    except Exception as e:
+        if "MESSAGE_NOT_MODIFIED" not in str(e):
+            raise
+    # 🟢 FIX END
 
     await query.answer()
 
