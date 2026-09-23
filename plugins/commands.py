@@ -139,15 +139,16 @@ async def start(client, message):
 ]
 
 reply_markup = InlineKeyboardMarkup(buttons)
-        caption_text = script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME)
-        
-        try:           
-            await message.reply_video(
-                video=START_VID,
-                caption=caption_text,
-                reply_markup=reply_markup,
-                parse_mode=enums.ParseMode.HTML
-            )
+caption_text = script.START_TXT.format(
+    message.from_user.mention, temp.U_NAME, temp.B_NAME
+)
+try:
+    await message.reply_video(
+        video=START_VID,
+        caption=caption_text,
+        reply_markup=reply_markup,
+        parse_mode=enums.ParseMode.HTML
+    )
         except Exception as video_error:
             logger.error(f"Achu മോനെ Video work ആയില്ല, കാരണം: {video_error}")
             try:               
