@@ -111,7 +111,7 @@ async def start(client, message):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
     # For Achu Vj
-        if len(message.command) != 2 or message.command[1] in ["subscribe", "error", "okay", "help"]:
+    if len(message.command) != 2 or message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [
             [
                 InlineKeyboardButton('🎥 𝐌𝐚𝐢ൻ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥', url='https://t.me/Clmainchannel'),
