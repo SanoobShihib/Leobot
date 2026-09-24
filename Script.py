@@ -91,8 +91,4 @@ Name - {}
     
 {file_name}
 
-╔═══ ᴊᴏɪɴ ᴡɪᴛʜ ᴜs ═══╗ 
-➲ <a href='t.me/Clmainchannel'>https://t.me/+Ik14BdOewjQzYjI1</a>
-➲ <a href='https://t.me/Clmainchannel'>MAIN CHANNEL</a>
-╚═══ ᴊᴏɪɴ ᴡɪᴛʜ ᴜs ═══╝
 </b>"""
