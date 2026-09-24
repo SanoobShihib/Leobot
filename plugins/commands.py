@@ -138,20 +138,26 @@ async def start(client, message):
     ]
 ]
 
-reply_markup = InlineKeyboardMarkup(buttons)
-caption_text = script.START_TXT.format(
-    message.from_user.mention, temp.U_NAME, temp.B_NAME
-)
-try:
-    await message.reply_video(
-        video=START_VID,
-        caption=caption_text,
-        reply_markup=reply_markup,
-        parse_mode=enums.ParseMode.HTML
-    )
+        reply_markup = InlineKeyboardMarkup(buttons)
+
+        caption_text = script.START_TXT.format(
+            message.from_user.mention,
+            temp.U_NAME,
+            temp.B_NAME
+        )
+
+        try:
+            await message.reply_video(
+                video=START_VID,
+                caption=caption_text,
+                reply_markup=reply_markup,
+                parse_mode=enums.ParseMode.HTML
+            )
         except Exception as video_error:
-            logger.error(f"Achu മോനെ Video work ആയില്ല, കാരണം: {video_error}")
-            try:               
+            logger.error(
+                f"Achu മോനെ Video work ആയില്ല, കാരണം: {video_error}"
+            )
+            try:
                 await message.reply_photo(
                     photo=START_IMG,
                     caption=caption_text,
@@ -159,7 +165,9 @@ try:
                     parse_mode=enums.ParseMode.HTML
                 )
             except Exception as photo_error:
-                logger.error(f"Photo-യും മൂഞ്ചി, കാരണം: {photo_error}")                
+                logger.error(
+                    f"Photo-യും മൂഞ്ചി, കാരണം: {photo_error}"
+                )
                 await message.reply_text(
                     text=caption_text,
                     reply_markup=reply_markup,
