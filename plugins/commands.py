@@ -702,7 +702,73 @@ async def save_template(client, message):
     template = message.text.split(" ", 1)[1]
     await save_group_settings(grp_id, 'template', template)
     await sts.edit(f"Successfully changed template for {title} to\n\n{template}")
+@Client.on_message(filters.command("addfilter") & filters.group)
+async def add_filter_command(client, message):
+    if not await admin_check(message):
+        return await message.reply_text(
+            "❌ Only group admins can add filters."
+        )
 
+    if len(message.command) < 2:
+        return await message.reply_text(
+            "Usage:\n/addfilter keyword\n\nExample:\n/addfilter hello"
+        )
+
+    keyword = message.text.split(None, 1)[1].strip()
+
+    reply = await message.reply_text(
+        f"🔹 Filter: `{keyword}`\n\n"
+        "ഇനി save ചെയ്യേണ്ട reply message-ന് ഈ message-നോട് reply ചെയ്യൂ."
+    )
+
+    ADD_FILTER_STATE[message.from_user.id] = {
+        "chat_id": message.chat.id,
+        "keyword": keyword,
+        "prompt_id": reply.id
+    }
+
+
+@Client.on_message(filters.group & filters.text)
+async def save_add_filter_reply(client, message):
+    if not message.from_user:
+        return
+
+    state = ADD_FILTER_STATE.get(message.from_user.id)
+
+    if not state:
+        return
+
+    if state["chat_id"] != message.chat.id:
+        return
+
+    if not message.reply_to_message:
+        return
+
+    if message.reply_to_message.id != state["prompt_id"]:
+        return
+
+    if not await admin_check(message):
+        ADD_FILTER_STATE.pop(message.from_user.id, None)
+        return
+
+    keyword = state["keyword"]
+
+    await add_filter(
+        message.chat.id,
+        keyword,
+        message.text,
+        "[]",
+        "None",
+        "None"
+    )
+
+    ADD_FILTER_STATE.pop(message.from_user.id, None)
+
+    await message.reply_text(
+        f"✅ Filter added successfully!\n\n"
+        f"🔑 Keyword: `{keyword}`\n"
+        f"💬 Reply: {message.text}"
+    )
 @Client.on_message(filters.command('restart') & filters.user(ADMINS))
 async def restart(b, m):
     if os.path.exists(".git"):
