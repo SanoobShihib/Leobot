@@ -427,8 +427,8 @@ async def start(client, message):
         )
     ]
 ]))
-    
-    
+    asyncio.create_task(delete_after_2_minutes(xd))
+       
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
 async def channel_info(bot, message):
            
