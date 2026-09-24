@@ -319,10 +319,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
             except:
                 pass
             if buttons:
-        await query.message.edit_text(
-            "Your connected group details :\n\n",
-            reply_markup=InlineKeyboardMarkup(buttons)
-        )
+                await query.message.edit_text(
+        "Your connected group details :\n\n",
+        reply_markup=InlineKeyboardMarkup(buttons)
+    )
     elif "alertmessage" in query.data:
         grp_id = query.message.chat.id
         i = query.data.split(":")[1]
