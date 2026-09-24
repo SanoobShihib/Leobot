@@ -1,21 +1,22 @@
 class script(object):
-    START_TXT = """<b>Hᴀɪ {}, I Aᴍ <a href=https://t.me/{}>{}</a>, Hᴀᴘᴘʏ Tᴏ Hᴀᴠᴇ Yᴏᴜ
 
-Hᴇʀᴇ Yᴏᴜ Cᴀɴ Rᴇϙᴜᴇsᴛ Mᴏᴠɪᴇ 's Jᴜsᴛ Sᴇɴᴛ <a href='https://t.me/Leofans_bot'>Movie Name</a> Wɪᴛʜ Pʀᴏᴘᴇʀ <a href='https://www.google.com/'>Google</a> Sᴘᴇʟʟɪɴɢ..!!
-    
+    START_TXT = """<b>HAI {}, I AM <a href="https://t.me/{}">{}</a>, HAPPY TO HELP YOU.
+
+HERE YOU CAN REQUEST MOVIE'S JUST SENT <a href="https://t.me/Leofans_bot">Movies</a>"""
+
     ABOUT_TXT = """✯ 𝙼𝚈 𝙽𝙰𝙼𝙴: {}
-✯ 𝙲𝚁𝙴𝙰𝚃𝙾𝚁: <a href=https://t.me/+hl_Pkp8qUOsxMmY1>Sanoob</a>
-✯ 𝙻𝙸𝙱𝚁𝙰𝚁𝚈: 𝙿𝚈𝚁𝙾𝙶𝚁𝙰𝙼
-✯ 𝙻𝙰𝙽𝙶𝚄𝙰𝙶𝙴: 𝙿𝚈𝚃𝙷𝙾𝙽 𝟹
-✯ 𝙳𝙰𝚃𝙰 𝙱𝙰𝚂𝙴: 𝙼𝙾𝙽𝙶𝙾 𝙳𝙱
-✯ 𝙱𝙾𝚃 𝚂𝙴𝚁𝚅𝙴𝚁: 𝙷𝙴𝚁𝙾𝙺𝚄
-✯ 𝙱𝚄𝙸𝙻𝙳 𝚂𝚃𝙰𝚃𝚄𝚂: Latest [ 𝙱𝙴𝚃𝙰 ]"""
+✯ CREATOR: <a href="https://t.me/+hl_Pkp8qUOsxMmY1">Sanoob</a>
+✯ LIBRARY: PYROGRAM
+✯ LANGUAGE: PYTHON 3
+✯ DATA BASE: MONGO DB
+✯ BOT SERVER: HEROKU
+✯ BUILD STATUS: Latest [ BETA ]"""
 
-    STATUS_TXT = """★ 𝚃𝙾𝚃𝙰𝙻 𝙵𝙸𝙻𝙴𝚂: <code>{}</code>
-★ 𝚃𝙾𝚃𝙰𝙻 𝚄𝚂𝙴𝚁𝚂: <code>{}</code>
-★ 𝚃𝙾𝚃𝙰𝙻 𝙲𝙷𝙰𝚃𝚂: <code>{}</code>
-★ 𝚄𝚂𝙴𝙳 𝚂𝚃𝙾𝚁𝙰𝙶𝙴: <code>{}</code> 𝙼𝚒𝙱
-★ 𝙵𝚁𝙴𝙴 𝚂𝚃𝙾𝚁𝙰𝙶𝙴: <code>{}</code> 𝙼𝚒𝙱"""
+    STATUS_TXT = """✯ TOTAL FILES: <code>{}</code>
+✯ TOTAL USERS: <code>{}</code>
+✯ TOTAL CHATS: <code>{}</code>
+✯ USED STORAGE: <code>{}</code> MiB
+✯ FREE STORAGE: <code>{}</code> MiB"""
     STATUS_TXT2 = """📂 𝖳𝗈𝗍𝖺𝗅 𝖥𝗂𝗅𝖾𝗌     - <code>{}</code>
 
 𝗗𝗕 𝟭
