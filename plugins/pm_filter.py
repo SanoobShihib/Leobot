@@ -328,11 +328,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
         i = query.data.split(":")[1]
         keyword = query.data.split(":")[2]
         reply_text, btn, alerts, fileid = await find_filter(grp_id, keyword)
-        if alerts is not None:
-            alerts = ast.literal_eval(alerts)
-            alert = alerts[int(i)]
-            alert = alert.replace("\\n", "\n").replace("\\t", "\t")
-                    await query.answer(alert, show_alert=True)
+            if alerts is not None:
+        alerts = ast.literal_eval(alerts)
+        alert = alerts[int(i)]
+        alert = alert.replace("\\n", "\n").replace("\\t", "\t")
+        await query.answer(alert, show_alert=True)
 
     if query.data.startswith("info#"):
         await query.answer(
