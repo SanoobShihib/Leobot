@@ -27,6 +27,48 @@ class script(object):
 🖥️ 𝖢𝗁𝖺𝗍𝗌            - <code>{}</code>
 𝖴𝗌𝖾𝖽 𝖲𝗍𝗈𝗋𝖺𝗀𝖾   - <code>{}</code>MB
 𝖥𝗋𝖾𝖾 𝖲𝗍𝗈𝗋𝖺𝗀𝖾    - <code>{}</code>MB"""
+    HELP_TEXT = """
+<b>❗️How to Search Movies Here❓
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+1. Just Send Movie Name and Movie Released Year Correctly.
+
+<blockquote>
+Check Google for Correct Movie Spelling and Movie Released Year
+</blockquote>
+
+<b>Examples:</b>
+
+<code>Oppam 2016</code>
+<code>Baahubali 2015 1080p</code>
+
+<blockquote>
+For Getting only 1080p Quality Files
+</blockquote>
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+<code>Baahubali 2015 Malayalam</code>
+<code>Baahubali 2015 Tamil</code>
+
+<blockquote>
+For Dubbed Movie Files
+</blockquote>
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+❗️On Android, Better Use VLC Media Player For Watch Movie's.
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+Cᴏɴᴛᴀᴄᴛ Bᴏᴛ Dᴇᴠᴇʟᴏᴘᴇʀ
+(Oʀ) Rᴇᴘᴏʀᴛ Bᴜɢꜱ..!!
+
+👉 @clsupportgroup
+</b>
+"""
+
     
     LOG_TEXT_G = """#NewGroup
 Group = {}(<code>{}</code>)
