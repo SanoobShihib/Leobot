@@ -705,9 +705,7 @@ async def save_template(client, message):
 @Client.on_message(filters.command("addfilter") & filters.group)
 async def add_filter_command(client, message):
     if not await admin_check(message):
-        return await message.reply_text(
-            "❌ Only group admins can add filters."
-        )
+    return await message.reply_text("❌ Admin check failed")
 
     if len(message.command) < 2:
         return await message.reply_text(
@@ -728,7 +726,7 @@ async def add_filter_command(client, message):
     }
 
 
-@Client.on_message(filters.group & filters.text)
+@Client.on_message(filters.group & filters.reply & filters.text)
 async def save_add_filter_reply(client, message):
     if not message.from_user:
         return
