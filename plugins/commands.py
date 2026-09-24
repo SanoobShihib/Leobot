@@ -131,7 +131,7 @@ async def start(client, message):
             InlineKeyboardButton('📣 ᴜᴘᴅᴀᴛᴇꜱ 📣', url='https://t.me/Clmainchannel')
             ],[
             InlineKeyboardButton('ℹ️ ʜᴇʟᴘ ℹ️', callback_data='help'),
-            InlineKeyboardButton(`📍 ᴀʙᴏᴜᴛ 📍', callback_data='about')
+            InlineKeyboardButton('📍 ᴀʙᴏᴜᴛ 📍', callback_data='about')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         caption_text = script.START_TXT.format(
