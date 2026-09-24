@@ -25,6 +25,7 @@ from info import (
     PROTECT_CONTENT, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION
 )
 from plugins.pm_filter import auto_filter
+from database.filters_mdb import add_filter
 from utils import (
     get_settings, get_size, is_subscribed, is_requested_one, is_requested_two, 
     save_group_settings, temp, check_loop_sub, check_loop_sub1, check_loop_sub2
@@ -38,6 +39,7 @@ from dotenv import load_dotenv
 load_dotenv("./dynamic.env", override=True, encoding="utf-8")
 
 BATCH_FILES = {}
+ADD_FILTER_STATE = {}
 DS_REACT = ["⚡"]
 
 should_run_check_loop_sub = False
