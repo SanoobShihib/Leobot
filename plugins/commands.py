@@ -70,7 +70,12 @@ def convert_time_to_seconds(time_str):
         return int(time_str[:-1]) * 3600
     else:
         return 0
-        
+async def delete_after_2_minutes(msg):
+    await asyncio.sleep(120)
+    try:
+        await msg.delete()
+    except:
+        pass        
 async def send_file(client, query, ident, file_id):
     files_ = await get_file_details(file_id)
     if not files_:
@@ -99,7 +104,8 @@ async def send_file(client, query, ident, file_id):
         caption=f_caption,
         protect_content=True if ident == 'checksubp' else False,
         reply_markup=reply_markup
-    )    
+    )
+    asyncio.create_task(delete_after_2_minutes(ok))
    
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):   
