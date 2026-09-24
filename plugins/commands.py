@@ -401,6 +401,7 @@ async def start(client, message):
 
     if f_caption is None:
         f_caption = f"{title}"
+        f_caption += "\n\n⚠️ This file will be deleted automatically in 2 minutes.\n📌 Please save/forward it before deletion."
 
     xd = await client.send_cached_media(
         chat_id=message.from_user.id,
