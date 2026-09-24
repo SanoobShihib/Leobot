@@ -332,14 +332,22 @@ async def cb_handler(client: Client, query: CallbackQuery):
             alerts = ast.literal_eval(alerts)
             alert = alerts[int(i)]
             alert = alert.replace("\\n", "\n").replace("\\t", "\t")
-            await query.answer(alert, show_alert=True)
-            
+                    await query.answer(alert, show_alert=True)
+
+    if query.data.startswith("info#"):
+        await query.answer(
+            "🎧 Audio & Subtitle information checking...",
+            show_alert=True
+        )
+        return
+
     if query.data.startswith("file"):
         ident, file_id = query.data.split("#")
         files_ = await get_file_details(file_id)
         if not files_:
             return await query.answer('No such file exist.')
         files = files_[0]
+              
         title = files.file_name
         size = get_size(files.file_size)
         f_caption = files.file_name
@@ -353,10 +361,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if f_caption is None:
             f_caption = f"{title}"
         buttons = [[
-            InlineKeyboardButton('🎥 𝐌𝐚𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥', url='https://t.me/Clmainchannel')
-            ],[
-            InlineKeyboardButton('👥 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 👥', url='https://t.me/+Ik14BdOewjQzYjI1')
-         ]]
+    InlineKeyboardButton(
+        'ℹ️ VIEW AUDIO & SUBS INFO ℹ️',
+        callback_data=f'info#{file_id}'
+    )
+        ]]
         try:
             if settings['botpm']:
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
@@ -406,13 +415,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
             file_id=file_id,
             caption=f_caption,
             protect_content=True if ident == "checksubp" else False,
-            reply_markup=InlineKeyboardMarkup(
-               [[
-                InlineKeyboardButton('🎥 𝐌𝐚𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥', url='https://t.me/Clmainchannel')
-            ],[
-               InlineKeyboardButton('👥 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 👥', url='https://t.me/+Ik14BdOewjQzYjI1')
-               ]]
-            )  
+                        reply_markup=InlineKeyboardMarkup([
+                [
+                    InlineKeyboardButton(
+                        "ℹ️ VIEW AUDIO & SUBS INFO ℹ️",
+                        callback_data=f"info#{file_id}"
+                    )
+                ]
+            ])  
         )
         if title and any(keyword in title.lower() for keyword in ['predvd', 'predvdrip']):
             f_caption += "\n⚠️<b><i>ഈ മൂവിയുടെ ഫയൽ എവിടെയെങ്കിലും ഫോർവേഡ് ചെയ്തു വെക്കുക എന്നിട്ട് ഡൗൺലോഡ് ചെയ്യുക\n\n3 മിനിറ്റിൽ ഇവിടുന്ന് ഡിലീറ്റ് ആവും🗑\n\n⚠️Forward the file of this Movie somewhere and download it\n\nWill be deleted from here in 3 minutes🗑</i></b>"
