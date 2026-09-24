@@ -111,35 +111,18 @@ async def start(client, message):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
     # For Achu Vj
-    if len(message.command) != 2 or message.command[1] in ["subscribe", "error", "okay", "help"]:
+        if len(message.command) != 2 or message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [
-    # 🟢 LEFT                 🔵 RIGHT
-    [
-        InlineKeyboardButton(
-            '🎥 𝐌𝐚𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥',
-            url='https://t.me/Clmainchannel'
-        ),
-        InlineKeyboardButton(
-            '👥 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 👥',
-            url='https://t.me/+Ik14BdOewjQzYjI1'
-        )
-    ],
-
-    # 🟢 LEFT                 🔵 RIGHT
-    [
-        InlineKeyboardButton(
-            '👥 𝐒𝐮ᴘᴘᴏʀᴛ 𝐆𝐫𝐨𝐮𝐩 👥',
-            url='https://t.me/+hl_Pkp8qUOsxMmY1'
-        ),
-        InlineKeyboardButton(
-            '❓ 𝐇𝐞𝐥𝐩',
-            callback_data='open_help'
-        )
-    ]
-]
-
+            [
+                InlineKeyboardButton('🎥 𝐌𝐚𝐢ൻ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🎥', url='https://t.me/Clmainchannel'),
+                InlineKeyboardButton('👥 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 👥', url='https://t.me/+Ik14BdOewjQzYjI1')
+            ],
+            [
+                InlineKeyboardButton('👥 𝐒𝐮𝐩𝐩𝐨𝐫𝐭 𝐆𝐫𝐨𝐮𝐩 👥', url='https://t.me/+hl_Pkp8qUOsxMmY1'),
+                InlineKeyboardButton('❓ 𝐇𝐞𝐥𝐩', callback_data='open_help')
+            ]
+        ]
         reply_markup = InlineKeyboardMarkup(buttons)
-
         caption_text = script.START_TXT.format(
             message.from_user.mention,
             temp.U_NAME,
