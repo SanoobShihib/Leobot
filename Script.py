@@ -1,9 +1,7 @@
 class script(object):
-    START_TXT = """<b>𝐇𝐞𝐲 {}, 𝐈 𝐀𝐦 <a href=https://t.me/{}>{}</a>, 𝐇𝐚𝐩𝐩𝐲 🖤 𝐓𝐨 𝐇𝐚𝐯𝐞 𝐘𝐨𝐮
+    START_TXT = """<b>Hᴀɪ {}, I Aᴍ <a href=https://t.me/{}>{}</a>, Hᴀᴘᴘʏ Tᴏ Hᴀᴠᴇ Yᴏᴜ
 
-𝐇𝐞𝐫𝐞 𝐘𝐨𝐮 𝐂𝐚𝐧 𝐑𝐞𝐪𝐮𝐞𝐬𝐭 𝐌𝐨𝐯𝐢𝐞'𝐬, 𝐉𝐮𝐬𝐭 𝐒𝐞𝐧𝐭 <a href='https://t.me/Leofans_bot'>Movie Name</a> 𝐖𝐢𝐭𝐡 𝐏𝐫𝐨𝐩𝐞𝐫 <a href='https://www.google.com/'>Google</a> 𝐒𝐩𝐞𝐥𝐥𝐢𝐧𝐠..!!
-
-𝐂𝐨𝐧𝐭𝐚𝐜𝐭 𝐁𝐨𝐭 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 (𝐎𝐫) 𝐑𝐞𝐩𝐨𝐫𝐭 𝐁𝐮𝐠𝐬..!! 👉 @Sanoobshihab</b>"""
+Hᴇʀᴇ Yᴏᴜ Cᴀɴ Rᴇϙᴜᴇsᴛ Mᴏᴠɪᴇ 's Jᴜsᴛ Sᴇɴᴛ <a href='https://t.me/Leofans_bot'>Movie Name</a> Wɪᴛʜ Pʀᴏᴘᴇʀ <a href='https://www.google.com/'>Google</a> Sᴘᴇʟʟɪɴɢ..!!
     
     ABOUT_TXT = """✯ 𝙼𝚈 𝙽𝙰𝙼𝙴: {}
 ✯ 𝙲𝚁𝙴𝙰𝚃𝙾𝚁: <a href=https://t.me/+hl_Pkp8qUOsxMmY1>Sanoob</a>
@@ -87,8 +85,9 @@ Added By - {}
 ID - <code>{}</code>
 Name - {}
 """
-    CUSTOM_FILE_CAPTION = """<b>𝐇𝐚𝐢 👋 {mention} 😍
+    CUSTOM_FILE_CAPTION = """<b>Hᴀɪ 👋 {mention} 😍
     
 {file_name}
-This file will be deleted automatically in 2 minutes.\n⚠️ Please save/forward it before deletion."
+
+⚠️ Tʜɪs ғɪʟᴇ ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ɪɴ 2 ᴍɪɴᴜᴛᴇs Pʟᴇᴀsᴇ sᴀᴠᴇ/ғᴏʀᴡᴀʀᴅ ɪᴛ ʙᴇғᴏʀᴇ ᴅᴇʟᴇᴛɪᴏɴ ⚠️
 </b>"""
