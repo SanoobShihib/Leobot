@@ -4,6 +4,14 @@ class script(object):
 𝐇𝐞𝐫𝐞 𝐘𝐨𝐮 𝐂𝐚𝐧 𝐑𝐞𝐪𝐮𝐞𝐬𝐭 𝐌𝐨𝐯𝐢𝐞'𝐬, 𝐉𝐮𝐬𝐭 𝐒𝐞𝐧𝐭 <a href='https://t.me/Leofans_bot'>Movie Name</a> 𝐖𝐢𝐭𝐡 𝐏𝐫𝐨𝐩𝐞𝐫 <a href='https://www.google.com/'>Google</a> 𝐒𝐩𝐞𝐥𝐥𝐢𝐧𝐠..!!
 
 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 𝐁𝐨𝐭 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 (𝐎𝐫) 𝐑𝐞𝐩𝐨𝐫𝐭 𝐁𝐮𝐠𝐬..!! 👉 @Sanoobshihab</b>"""
+    
+    ABOUT_TXT = """✯ 𝙼𝚈 𝙽𝙰𝙼𝙴: {}
+✯ 𝙲𝚁𝙴𝙰𝚃𝙾𝚁: <a href=https://t.me/+hl_Pkp8qUOsxMmY1>Sanoob</a>
+✯ 𝙻𝙸𝙱𝚁𝙰𝚁𝚈: 𝙿𝚈𝚁𝙾𝙶𝚁𝙰𝙼
+✯ 𝙻𝙰𝙽𝙶𝚄𝙰𝙶𝙴: 𝙿𝚈𝚃𝙷𝙾𝙽 𝟹
+✯ 𝙳𝙰𝚃𝙰 𝙱𝙰𝚂𝙴: 𝙼𝙾𝙽𝙶𝙾 𝙳𝙱
+✯ 𝙱𝙾𝚃 𝚂𝙴𝚁𝚅𝙴𝚁: 𝙷𝙴𝚁𝙾𝙺𝚄
+✯ 𝙱𝚄𝙸𝙻𝙳 𝚂𝚃𝙰𝚃𝚄𝚂: Latest [ 𝙱𝙴𝚃𝙰 ]"""
 
     STATUS_TXT = """★ 𝚃𝙾𝚃𝙰𝙻 𝙵𝙸𝙻𝙴𝚂: <code>{}</code>
 ★ 𝚃𝙾𝚃𝙰𝙻 𝚄𝚂𝙴𝚁𝚂: <code>{}</code>
