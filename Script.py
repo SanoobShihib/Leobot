@@ -90,5 +90,5 @@ Name - {}
     CUSTOM_FILE_CAPTION = """<b>𝐇𝐚𝐢 👋 {mention} 😍
     
 {file_name}
-
+This file will be deleted automatically in 2 minutes.\n⚠️ Please save/forward it before deletion."
 </b>"""
