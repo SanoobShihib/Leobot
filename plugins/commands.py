@@ -420,7 +420,7 @@ async def start(client, message):
             callback_data=f'extract_data:{file_id}'
         )
     ]
-])
+]))
     
     
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
