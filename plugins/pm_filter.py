@@ -318,21 +318,22 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 )
             except:
                 pass
-        if buttons:
-            await query.message.edit_text(
-                "Your connected group details ;\n\n",
-                reply_markup=InlineKeyboardMarkup(buttons)
-            )
+            if buttons:
+        await query.message.edit_text(
+            "Your connected group details :\n\n",
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
     elif "alertmessage" in query.data:
         grp_id = query.message.chat.id
         i = query.data.split(":")[1]
         keyword = query.data.split(":")[2]
         reply_text, btn, alerts, fileid = await find_filter(grp_id, keyword)
-            if alerts is not None:
-        alerts = ast.literal_eval(alerts)
-        alert = alerts[int(i)]
-        alert = alert.replace("\\n", "\n").replace("\\t", "\t")
-        await query.answer(alert, show_alert=True)
+
+        if alerts is not None:
+            alerts = ast.literal_eval(alerts)
+            alert = alerts[int(i)]
+            alert = alert.replace("\\n", "\n").replace("\\t", "\t")
+            await query.answer(alert, show_alert=True)
 
     if query.data.startswith("info#"):
         await query.answer(
@@ -340,8 +341,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             show_alert=True
         )
         return
-
-    if query.data.startswith("file"):
+       if query.data.startswith("file"):
         ident, file_id = query.data.split("#")
         files_ = await get_file_details(file_id)
         if not files_:
