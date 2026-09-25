@@ -702,6 +702,7 @@ async def save_template(client, message):
     template = message.text.split(" ", 1)[1]
     await save_group_settings(grp_id, 'template', template)
     await sts.edit(f"Successfully changed template for {title} to\n\n{template}")
+  
 @Client.on_message(filters.command("addfilter") & filters.group)
 async def add_filter_command(client, message):
     if not await admin_check(message):
@@ -709,14 +710,14 @@ async def add_filter_command(client, message):
 
     if len(message.command) < 2:
         return await message.reply_text(
-            "Usage:\n/addfilter keyword\n\nExample:\n/addfilter hello"
+        "Usage:\n/addfilter keyword\n\nExample:\n/addfilter hello"
         )
 
     keyword = message.text.split(None, 1)[1].strip()
-
+    
     reply = await message.reply_text(
-        f"🔹 Filter: `{keyword}`\n\n"
-        "ഇനി save ചെയ്യേണ്ട reply message-ന് ഈ message-നോട് reply ചെയ്യൂ."
+        f"• Filter: `{keyword}`\n\n"
+        "ഇനി save ചെയ്യേണ്ട reply message-ന് ഈ message-നോട് reply ചെയ്യുക."
     )
 
     ADD_FILTER_STATE[message.from_user.id] = {
