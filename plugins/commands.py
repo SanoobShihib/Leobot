@@ -704,8 +704,8 @@ async def save_template(client, message):
     await sts.edit(f"Successfully changed template for {title} to\n\n{template}")
 @Client.on_message(filters.command("addfilter") & filters.group)
 async def add_filter_command(client, message):
-if not await admin_check(message):
-    return await message.reply_text("❌ Admin check failed")
+    if not await admin_check(message):
+        return await message.reply_text("❌ Admin check failed")
 
     if len(message.command) < 2:
         return await message.reply_text(
