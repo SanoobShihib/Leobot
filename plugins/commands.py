@@ -115,7 +115,7 @@ async def start(client, message):
         buttons = [
                 InlineKeyboardButton('👥 ᴊᴏɪɴ ᴏᴜʀ ɢʀᴏᴜᴘ 👥', url=f'https://t.me/+Ik14BdOewjQzYjI1')
                ],[
-                InlineKeyboardButton(''📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ 📌', url=f'https://t.me/Clmainchannel')
+                InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ 📌', url=f'https://t.me/Clmainchannel')
               ],[
                 InlineKeyboardButton('👥 ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ 👥', url="https://t.me/clsupportgroup"),
         ]       
