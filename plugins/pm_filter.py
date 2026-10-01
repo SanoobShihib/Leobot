@@ -32,6 +32,78 @@ logger.setLevel(logging.ERROR)
 BUTTONS = {}
 SPELL_CHECK = {}
 
+@Client.on_callback_query(filters.regex(r"^report_request#"))
+async def report_request(client, query):
+    user_id = int(query.data.split("#")[1])
+
+    if query.from_user.id != user_id:
+        return await query.answer(
+            "This is not your request.",
+            show_alert=True
+        )
+
+    original_message = query.message.reply_to_message
+
+    if not original_message:
+        return await query.answer(
+            "Request message not found.",
+            show_alert=True
+        )
+
+    movie_name = original_message.text or "Unknown"
+
+    report_text = (
+        "🚨 <b>NEW MOVIE REQUEST / REPORT</b>\n\n"
+        f"👤 <b>User:</b> {query.from_user.mention}\n"
+        f"🆔 <b>User ID:</b> <code>{user_id}</code>\n"
+        f"🎬 <b>Requested:</b> <code>{movie_name}</code>\n\n"
+        "📌 User requested a file which was not found in the database.\n"
+        "➡️ Add the file/movie to the database and <b>REPLY</b> to this message."
+    )
+
+    await client.send_message(
+        LOG_CHANNEL,
+        report_text
+    )
+
+    await query.answer(
+        "✅ Report sent to admin.",
+        show_alert=True
+    )
+
+@Client.on_message(
+    filters.chat(LOG_CHANNEL) &
+    filters.reply &
+    filters.user(ADMINS)
+)
+async def admin_reply_to_request(client, message):
+    replied = message.reply_to_message
+
+    if not replied or not replied.text:
+        return
+
+    match = re.search(
+        r"User ID:</b>\s*<code>(\d+)</code>",
+        replied.text
+    )
+
+    if not match:
+        return
+
+    user_id = int(match.group(1))
+
+    try:
+        await message.copy(chat_id=user_id)
+
+        await message.reply_text(
+            "✅ Sent to the user."
+        )
+
+    except Exception as e:
+        await message.reply_text(
+            f"❌ Could not send to user.\n\n{e}"
+        )
+
 
 @Client.on_message(filters.text & filters.incoming)
 async def give_filters(client, message):
@@ -637,7 +709,17 @@ async def auto_filter(client, msg, spoll=False):
                 btn_google = InlineKeyboardButton("🔎 𝗖𝗼𝗿𝗿𝗲𝗰𝘁 𝗦𝗽𝗲𝗹𝗹𝗶𝗻𝗴 (𝖦𝗈𝗈𝗀𝗅𝖾) 🔍", url=f"https://www.google.com/search?q={reqst_gle}")
                 google_row = [btn_google]
 
-                keyboard = InlineKeyboardMarkup(inline_keyboard=[google_row])
+                btn_report = InlineKeyboardButton(
+                      "‼ 𝖱𝖾𝗉𝗈𝗋𝗍 𝗍𝗈 𝖺𝖽𝗆𝗂𝗇 ▶",
+                callback_data=f"report_request#{msg.from_user.id}"
+                )
+
+                keyboard = InlineKeyboardMarkup(
+                    inline_keyboard=[
+                        google_row,
+                        [btn_report]
+                    ]
+                )
                 try:
                     k = await msg.reply_text(text=f"<b>❝ 𝖧𝖾𝗒 {msg.from_user.mention} താഴെ ഉള്ള കാര്യങ്ങൾ ശ്രദ്ധിക്കുക ❞\n\n🔹കറക്റ്റ് സ്പെല്ലിംഗിൽ ചോദിക്കുക. (ഇംഗ്ലീഷിൽ മാത്രം)\n\n🔸സിനിമകൾ ഇംഗ്ലീഷിൽ Type ചെയ്ത് മാത്രം ചോദിക്കുക.\n\n🔹OTT റിലീസ് ആകാത്ത സിനിമകൾ ചോദിക്കരുത്.\n\n🔸സിനിമയുടെ പേര് [വർഷം ഭാഷ] ഈ രീതിയിൽ ചോദിക്കുക.\n\n🔹സിനിമ Request ചെയ്യുമ്പോൾ Symbols ഒഴിവാക്കുക. [+:;'*!-&.. etc\n‼ 𝖱𝖾𝗉𝗈𝗋𝗍 𝗍𝗈 𝖺𝖽𝗆𝗂𝗇 ▶ @MCU_ADMIN_V1_BOT</b>", reply_markup=keyboard)                    
                     #await k.delete()
