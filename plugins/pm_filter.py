@@ -203,31 +203,35 @@ async def report_request(client, query):
 # ============================================================
 
 @Client.on_message(
-    filters.chat(LOG_CHANNEL) &
-    filters.reply
+    filters.chat(LOG_CHANNEL) & filters.reply
 )
 async def admin_reply_to_request(client, message):
 
-    # Admin ആണോ എന്ന് manually check ചെയ്യുന്നു
-    # ADMINS int/string രണ്ടും support ചെയ്യും
-    if not message.from_user:
-        return
+    # Check admin ID safely
+    raw_admins = ADMINS if isinstance(ADMINS, (list, tuple, set)) else [ADMINS]
 
-    if not is_admin_user(message.from_user.id):
+    admin_ids = set()
+
+    for admin in raw_admins:
+        try:
+            admin_ids.add(int(admin))
+        except:
+            pass
+
+    # Ignore non-admin messages
+    if not message.from_user or message.from_user.id not in admin_ids:
         return
 
     replied = message.reply_to_message
 
+    # Must reply to the report message
     if not replied:
         return
 
-    # Report message text വേണം
-    report_text = replied.text or replied.caption
+    # Get report text
+    report_text = replied.text or replied.caption or ""
 
-    if not report_text:
-        return
-
-    # Report message-ൽ User ID കണ്ടെത്തുന്നു
+    # Find User ID from report
     match = re.search(
         r"User ID:</b>\s*<code>(\d+)</code>",
         report_text
@@ -239,26 +243,19 @@ async def admin_reply_to_request(client, message):
     user_id = int(match.group(1))
 
     try:
+        # Copy admin's reply to requesting user
+        await message.copy(chat_id=user_id)
 
-        # Admin അയച്ച message/file/user-ന് copy ചെയ്യും
-        await message.copy(
-            chat_id=user_id
-        )
-
-        # Admin channel-ൽ confirmation
+        # Confirm in LOG_CHANNEL
         await message.reply_text(
-            "✅ Sent to the user."
+            "✅ Sent to the requesting user."
         )
 
     except Exception as e:
-
-        logger.exception(e)
-
         await message.reply_text(
             f"❌ Could not send to user.\n\n{e}"
         )
-
-
+        
 # ============================================================
 # GLOBAL / AUTO FILTER
 # ============================================================
