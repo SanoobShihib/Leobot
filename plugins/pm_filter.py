@@ -207,34 +207,45 @@ async def report_request(client, query):
 )
 async def admin_reply_to_request(client, message):
 
-    # Check admin ID safely
-    raw_admins = ADMINS if isinstance(ADMINS, (list, tuple, set)) else [ADMINS]
+    # Admin ID check
+    raw_admins = (
+        ADMINS
+        if isinstance(ADMINS, (list, tuple, set))
+        else [ADMINS]
+    )
 
     admin_ids = set()
 
     for admin in raw_admins:
         try:
             admin_ids.add(int(admin))
-        except:
+        except Exception:
             pass
 
-    # Ignore non-admin messages
-    if not message.from_user or message.from_user.id not in admin_ids:
+    # Only admins can reply
+    if not message.from_user:
         return
 
+    if message.from_user.id not in admin_ids:
+        return
+
+    # Get the report message
     replied = message.reply_to_message
 
-    # Must reply to the report message
     if not replied:
         return
 
-    # Get report text
     report_text = replied.text or replied.caption or ""
 
-    # Find User ID from report
+    # Check whether this is a movie report
+    if "NEW MOVIE REQUEST / REPORT" not in report_text:
+        return
+
+    # Find requesting user's ID
     match = re.search(
-        r"User ID:</b>\s*<code>(\d+)</code>",
-        report_text
+        r"User ID:\s*(?:<code>)?(\d+)(?:</code>)?",
+        report_text,
+        re.IGNORECASE
     )
 
     if not match:
@@ -243,19 +254,25 @@ async def admin_reply_to_request(client, message):
     user_id = int(match.group(1))
 
     try:
-        # Copy admin's reply to requesting user
-        await message.copy(chat_id=user_id)
 
-        # Confirm in LOG_CHANNEL
+        # Send admin reply to requesting user
+        await message.copy(
+            chat_id=user_id
+        )
+
+        # Send confirmation in LOG_CHANNEL
         await message.reply_text(
-            "✅ Sent to the requesting user."
+            "✅ <b>Message sent to the requesting user.</b>"
         )
 
     except Exception as e:
+
+        logger.exception(e)
+
         await message.reply_text(
-            f"❌ Could not send to user.\n\n{e}"
+            "❌ <b>Could not send message to user.</b>"
         )
-        
+
 # ============================================================
 # GLOBAL / AUTO FILTER
 # ============================================================
