@@ -203,47 +203,25 @@ async def report_request(client, query):
 # ============================================================
 
 @Client.on_message(
-    filters.chat(LOG_CHANNEL) & filters.reply
+    filters.chat(LOG_CHANNEL) &
+    filters.reply &
+    filters.user(ADMINS)
 )
-async def admin_reply_to_request(client, message):
+async def admin_reply_to_request(client: Client, message):
+    replied_message = message.reply_to_message
 
-    # Admin ID check
-    raw_admins = (
-        ADMINS
-        if isinstance(ADMINS, (list, tuple, set))
-        else [ADMINS]
+    if not replied_message:
+        return
+
+    report_text = (
+        replied_message.text
+        or replied_message.caption
+        or ""
     )
 
-    admin_ids = set()
-
-    for admin in raw_admins:
-        try:
-            admin_ids.add(int(admin))
-        except Exception:
-            pass
-
-    # Only admins can reply
-    if not message.from_user:
-        return
-
-    if message.from_user.id not in admin_ids:
-        return
-
-    # Get the report message
-    replied = message.reply_to_message
-
-    if not replied:
-        return
-
-    report_text = replied.text or replied.caption or ""
-
-    # Check whether this is a movie report
-    if "NEW MOVIE REQUEST / REPORT" not in report_text:
-        return
-
-    # Find requesting user's ID
+    # Get User ID from report
     match = re.search(
-        r"User ID:\s*(?:<code>)?(\d+)(?:</code>)?",
+        r"User\s*ID\s*:\s*(?:<code>)?(\d+)(?:</code>)?",
         report_text,
         re.IGNORECASE
     )
@@ -254,23 +232,31 @@ async def admin_reply_to_request(client, message):
     user_id = int(match.group(1))
 
     try:
+        # Text reply
+        if message.text:
+            await client.send_message(
+                chat_id=user_id,
+                text=(
+                    "💬 <b>Message From Admin:</b>\n\n"
+                    f"{message.text}"
+                )
+            )
 
-        # Send admin reply to requesting user
-        await message.copy(
-            chat_id=user_id
-        )
+        # Photo / Video / Document / Other media
+        else:
+            await message.copy(
+                chat_id=user_id
+            )
 
-        # Send confirmation in LOG_CHANNEL
         await message.reply_text(
-            "✅ <b>Message sent to the requesting user.</b>"
+            "✅ <b>Message sent to the user.</b>"
         )
 
     except Exception as e:
-
         logger.exception(e)
 
         await message.reply_text(
-            "❌ <b>Could not send message to user.</b>"
+            "❌ <b>Failed to send the message to the user.</b>"
         )
 
 # ============================================================
