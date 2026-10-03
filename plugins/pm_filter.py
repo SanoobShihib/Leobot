@@ -206,7 +206,7 @@ async def report_request(client, query):
     filters.chat(LOG_CHANNEL) &
     filters.reply
 )
-async def admin_reply_to_request(client, message: Message):
+async def admin_reply_to_request(client, message):
 
     replied_message = message.reply_to_message
 
