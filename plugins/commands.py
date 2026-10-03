@@ -109,7 +109,7 @@ async def send_file(client, query, ident, file_id):
     )
     asyncio.create_task(delete_after_2_minutes(ok))
    
-@@Client.on_message(filters.command("start") & filters.incoming)
+@Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
 
     # Report to Admin
