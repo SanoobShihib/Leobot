@@ -287,6 +287,10 @@ async def admin_reply_to_request(client, message):
 )
 async def give_filters(client, message):
 
+    # PM-ൽ movie/file search OFF
+    if message.chat.type == enums.ChatType.PRIVATE:
+        return
+
     k = await global_filters(
         client,
         message
