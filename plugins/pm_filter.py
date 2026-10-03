@@ -553,6 +553,105 @@ async def cb_handler(
     if query.data == "close_data":
 
         await query.message.delete()
+    elif query.data.startswith("series_season:"):
+
+        _, search, season = query.data.split(":", 2)
+
+        files, offset, total = await get_search_results(
+            search,
+            offset=0,
+            filter=True
+        )
+
+        episodes = get_series_episodes(
+            files,
+            int(season)
+        )
+
+        if not episodes:
+            return await query.answer(
+                "No episodes found.",
+                show_alert=True
+            )
+
+        buttons = []
+
+        for episode, file in episodes:
+
+            buttons.append(
+                [
+                    InlineKeyboardButton(
+                        text=f"🎬 Episode {episode:02d}",
+                        callback_data=f"file#{file.file_id}"
+                    )
+                ]
+            )
+
+        buttons.append(
+            [
+                InlineKeyboardButton(
+                    text="⬅️ Back to Seasons",
+                    callback_data=f"series_back:{search}"
+                )
+            ]
+        )
+
+        await query.message.edit_text(
+            f"📺 <b>{search}</b>\n\n"
+            f"🎞 <b>Season {season}</b>",
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+
+        return
+    elif query.data.startswith("series_back:"):
+
+        search = query.data.split(":", 1)[1]
+
+        files, offset, total = await get_search_results(
+            search,
+            max_results=60,
+            offset=0,
+            filter=True
+        )
+
+        series_seasons = get_series_seasons(files)
+
+        if not series_seasons:
+            return await query.answer(
+                "No seasons found.",
+                show_alert=True
+            )
+
+        buttons = []
+
+        for season in sorted(series_seasons.keys()):
+
+            buttons.append(
+                [
+                    InlineKeyboardButton(
+                        text=f"📺 Season {season}",
+                        callback_data=f"series_season:{search}:{season}"
+                    )
+                ]
+            )
+
+        buttons.append(
+            [
+                InlineKeyboardButton(
+                    text="❌ Close",
+                    callback_data="close_data"
+                )
+            ]
+        )
+
+        await query.message.edit_text(
+            f"🎬 <b>{search}</b>\n\n"
+            f"📺 <b>Select Season</b>",
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+
+        await query.answer()
+        return
 
     elif query.data == "delallconfirm":
 
