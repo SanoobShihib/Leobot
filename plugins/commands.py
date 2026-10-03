@@ -109,8 +109,26 @@ async def send_file(client, query, ident, file_id):
     )
     asyncio.create_task(delete_after_2_minutes(ok))
    
-@Client.on_message(filters.command("start") & filters.incoming)
-async def start(client, message):   
+@@Client.on_message(filters.command("start") & filters.incoming)
+async def start(client, message):
+
+    # Report to Admin
+    if len(message.command) == 2 and message.command[1] == "report":
+        await message.reply_text(
+            text="""<blockquote>
+❌ Wrong Format / തെറ്റായ ഫോർമാറ്റ്!
+
+Please send your request in this format:
+Movie Name + Year
+
+Example:
+Kuruthi 2019
+
+💡 സിനിമയുടെ പേരിനൊപ്പം വർഷം കൂടി ടൈപ്പ് ചെയ്ത് ഇവിടെ അയക്കുക
+</blockquote>""",
+            parse_mode=enums.ParseMode.HTML
+        )
+        return   
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [
                 InlineKeyboardButton('👥 ᴊᴏɪɴ ᴏᴜʀ ɢʀᴏᴜᴘ 👥', url=f'https://t.me/+Ik14BdOewjQzYjI1')
