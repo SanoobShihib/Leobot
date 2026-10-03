@@ -1649,6 +1649,59 @@ async def cb_handler(
         'Piracy Is Crime'
     )
 
+# ============================================================
+# SERIES MODE HELPERS
+# ============================================================
+
+def get_series_seasons(files):
+    seasons = {}
+
+    for file in files:
+        name = file.file_name or ""
+
+        match = re.search(
+            r'\bS(\d{1,2})(?:E\d{1,3})?\b',
+            name,
+            re.IGNORECASE
+        )
+
+        if match:
+            season = int(match.group(1))
+
+            if season not in seasons:
+                seasons[season] = []
+
+            seasons[season].append(file)
+
+    return seasons
+
+
+def get_series_episodes(files, season):
+    episodes = []
+
+    for file in files:
+        name = file.file_name or ""
+
+        match = re.search(
+            rf'\bS{season:02d}E(\d{{1,3}})\b',
+            name,
+            re.IGNORECASE
+        )
+
+        if match:
+            episodes.append(
+                (
+                    int(match.group(1)),
+                    file
+                )
+            )
+
+    episodes.sort(
+        key=lambda x: x[0]
+    )
+
+    return episodes
+
 
 # ============================================================
 # AUTO FILTER
