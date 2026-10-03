@@ -198,25 +198,30 @@ async def report_request(client, query):
         )
 
 
-# ============================================================
+# ====================================================
 # ADMIN REPLY → USER
-# ============================================================
+# ====================================================
 
 @Client.on_message(
     filters.chat(LOG_CHANNEL) &
     filters.reply
 )
-async def admin_reply_to_request(client: Client, message):
-
-    if not message.from_user:
-        return
-
-    if not is_admin_user(message.from_user.id):
-        return
+async def admin_reply_to_request(client, message: Message):
 
     replied_message = message.reply_to_message
 
     if not replied_message:
+        return
+
+    # Get admin ID safely
+    admin_id = None
+
+    if message.from_user:
+        admin_id = message.from_user.id
+
+    # Channel replies may not have from_user
+    # So allow only messages/replies inside LOG_CHANNEL
+    if message.chat and message.chat.id != LOG_CHANNEL:
         return
 
     report_text = (
@@ -225,6 +230,7 @@ async def admin_reply_to_request(client: Client, message):
         or ""
     )
 
+    # Find User ID from the original report
     match = re.search(
         r"User\s*ID\s*:\s*(?:<code>)?(\d+)(?:</code>)?",
         report_text,
@@ -232,35 +238,45 @@ async def admin_reply_to_request(client: Client, message):
     )
 
     if not match:
+        await message.reply_text(
+            "❌ User ID not found in this request."
+        )
         return
 
     user_id = int(match.group(1))
 
     try:
 
+        # Admin text reply
         if message.text:
             await client.send_message(
                 chat_id=user_id,
                 text=(
                     "💬 <b>Message From Admin:</b>\n\n"
                     f"{message.text}"
-                )
+                ),
+                parse_mode=enums.ParseMode.HTML
             )
 
+        # Admin sends photo/document/video/etc.
         else:
             await message.copy(
                 chat_id=user_id
             )
 
         await message.reply_text(
-            "✅ <b>Message sent to the user.</b>"
+            "✅ <b>Message sent to the user.</b>",
+            parse_mode=enums.ParseMode.HTML
         )
 
     except Exception as e:
+
         logger.exception(e)
 
         await message.reply_text(
-            "❌ <b>Failed to send the message to the user.</b>"
+            "❌ <b>Failed to send the message to the user.</b>\n\n"
+            f"<code>{e}</code>",
+            parse_mode=enums.ParseMode.HTML
         )
 # ============================================================
 # GLOBAL / AUTO FILTER
