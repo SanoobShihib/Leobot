@@ -1682,7 +1682,7 @@ async def auto_filter(
 
                 btn_report = InlineKeyboardButton(
                     "‼ 𝖱𝖾𝗉𝗈𝗋𝗍 𝗍𝗈 𝖺𝖽𝗆𝗂𝗇 ▶",
-                    callback_data=f"report_request#{msg.from_user.id}"
+                url=f"https://t.me/{temp.U_NAME}?start=report"
                 )
 
                 keyboard = InlineKeyboardMarkup(
