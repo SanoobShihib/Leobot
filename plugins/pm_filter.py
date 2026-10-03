@@ -557,8 +557,9 @@ async def cb_handler(
 
         _, search, season = query.data.split(":", 2)
 
-        files, offset, total = await get_search_results(
+        files, _, _ = await get_search_results(
             search,
+            max_results=60,
             offset=0,
             filter=True
         )
@@ -574,15 +575,30 @@ async def cb_handler(
                 show_alert=True
             )
 
+        # Duplicate episode numbers ഒഴിവാക്കുന്നു
+        episode_numbers = sorted(
+            set(
+                episode
+                for episode, _ in episodes
+            )
+        )
+
         buttons = []
 
-        for episode, file in episodes:
+        for episode in episode_numbers:
+
+            # Episode click ചെയ്താൽ നേരിട്ട് file അയക്കും
+            episode_file = next(
+                file
+                for ep, file in episodes
+                if ep == episode
+            )
 
             buttons.append(
                 [
                     InlineKeyboardButton(
                         text=f"🎬 Episode {episode:02d}",
-                        callback_data=f"file#{file.file_id}"
+                        callback_data=f"file#{episode_file.file_id}"
                     )
                 ]
             )
@@ -590,7 +606,7 @@ async def cb_handler(
         buttons.append(
             [
                 InlineKeyboardButton(
-                    text="⬅️ Back to Seasons",
+                    text="⬅️ Back",
                     callback_data=f"series_back:{search}"
                 )
             ]
@@ -602,7 +618,9 @@ async def cb_handler(
             reply_markup=InlineKeyboardMarkup(buttons)
         )
 
+        await query.answer()
         return
+    
     elif query.data.startswith("series_back:"):
 
         search = query.data.split(":", 1)[1]
