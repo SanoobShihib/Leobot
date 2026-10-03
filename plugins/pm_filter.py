@@ -204,10 +204,16 @@ async def report_request(client, query):
 
 @Client.on_message(
     filters.chat(LOG_CHANNEL) &
-    filters.reply &
-    filters.user(ADMINS)
+    filters.reply
 )
 async def admin_reply_to_request(client: Client, message):
+
+    if not message.from_user:
+        return
+
+    if not is_admin_user(message.from_user.id):
+        return
+
     replied_message = message.reply_to_message
 
     if not replied_message:
@@ -219,7 +225,6 @@ async def admin_reply_to_request(client: Client, message):
         or ""
     )
 
-    # Get User ID from report
     match = re.search(
         r"User\s*ID\s*:\s*(?:<code>)?(\d+)(?:</code>)?",
         report_text,
@@ -232,7 +237,7 @@ async def admin_reply_to_request(client: Client, message):
     user_id = int(match.group(1))
 
     try:
-        # Text reply
+
         if message.text:
             await client.send_message(
                 chat_id=user_id,
@@ -242,7 +247,6 @@ async def admin_reply_to_request(client: Client, message):
                 )
             )
 
-        # Photo / Video / Document / Other media
         else:
             await message.copy(
                 chat_id=user_id
@@ -258,7 +262,6 @@ async def admin_reply_to_request(client: Client, message):
         await message.reply_text(
             "❌ <b>Failed to send the message to the user.</b>"
         )
-
 # ============================================================
 # GLOBAL / AUTO FILTER
 # ============================================================
@@ -1682,7 +1685,7 @@ async def auto_filter(
 
                 btn_report = InlineKeyboardButton(
                     "‼ 𝖱𝖾𝗉𝗈𝗋𝗍 𝗍𝗈 𝖺𝖽𝗆𝗂𝗇 ▶",
-                url=f"https://t.me/{temp.U_NAME}?start=report"
+                    callback_data=f"report_request#{msg.from_user.id}"
                 )
 
                 keyboard = InlineKeyboardMarkup(
