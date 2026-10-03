@@ -1838,6 +1838,50 @@ async def auto_filter(
                 offset=0,
                 filter=True
             )
+            series_files, _, _ = await get_search_results(
+                search.lower(),
+                max_results=60,
+                offset=0,
+                filter=True
+            )
+
+            series_seasons = get_series_seasons(
+                series_files
+            )
+
+            if series_seasons:
+
+                buttons = []
+
+                for season in sorted(series_seasons.keys()):
+
+                    buttons.append(
+                        [
+                            InlineKeyboardButton(
+                                text=f"📺 Season {season}",
+                                callback_data=f"series_season:{search}:{season}"
+                            )
+                        ]
+                    )
+
+                buttons.append(
+                    [
+                        InlineKeyboardButton(
+                            text="❌ Close",
+                            callback_data="close_data"
+                        )
+                    ]
+                )
+
+                await msg.reply_text(
+                    f"🎬 <b>{search}</b>\n\n"
+                    f"📺 <b>Select Season</b>",
+                    reply_markup=InlineKeyboardMarkup(
+                        buttons
+                    )
+                )
+
+                return
 
             # =================================================
             # NO FILE FOUND
