@@ -108,7 +108,7 @@ async def send_file(client, query, ident, file_id):
         protect_content=True if ident == 'checksubp' else False,
         reply_markup=reply_markup
     )
-    asyncio.create_task(delete_after_2_minutes(ok))
+    asyncio.create_task(delete_after_10_minutes(ok))
 
 @Client.on_message(filters.command("batch") & filters.private & filters.user(ADMINS))
 async def batch_command(client, message):
@@ -123,7 +123,17 @@ async def batch_command(client, message):
     )
 
 @Client.on_message(
-    (filters.document | filters.video | filters.audio | filters.animation | filters.text)
+    (
+        filters.document
+        | filters.video
+        | filters.audio
+        | filters.animation
+        | filters.photo
+        | filters.sticker
+        | filters.voice
+        | filters.video_note
+        | filters.text
+    )
     & filters.private
     & filters.user(ADMINS)
 )
@@ -134,26 +144,18 @@ async def batch_file_handler(client, message):
     if user_id not in BATCH_CREATE_STATE:
         return
 
-    media = (
-        message.document
-        or message.video
-        or message.audio
-        or message.animation
-        or message.text
-    )
+    if message.text and message.text.startswith("/"):
+        return
 
     BATCH_CREATE_STATE[user_id].append({
-        "file_id": media.file_id,
-        "title": getattr(media, "file_name", None) or "File",
-        "size": getattr(media, "file_size", 0),
-        "caption": message.caption or "",
-        "protect": False
+        "chat_id": message.chat.id,
+        "message_id": message.id
     })
 
     count = len(BATCH_CREATE_STATE[user_id])
 
     await message.reply_text(
-        f"✅ File {count} added to batch."
+        f"✅ Item {count} added to batch."
     )
 
 @Client.on_message(filters.command("finish") & filters.private & filters.user(ADMINS))
@@ -385,54 +387,51 @@ Kuruthi 2019
     except:
         file_id = data
         pre = ""
-    if data.split("-", 1)[0] == "BATCH":
-        sts = await message.reply("Please wait")
-        file_id = data.split("-", 1)[1]
-        msgs = BATCH_FILES.get(file_id)
-        if not msgs:
-            file = await client.download_media(file_id)
-            try: 
-                with open(file) as file_data:
-                    msgs=json.loads(file_data.read())
-            except:
-                await sts.edit("FAILED")
-                return await client.send_message(LOG_CHANNEL, "UNABLE TO OPEN FILE.")
-            os.remove(file)
-            BATCH_FILES[file_id] = msgs
-        for msg in msgs:
-            title = msg.get("title")
-            size=get_size(int(msg.get("size", 0)))
-            f_caption=msg.get("caption", "")
-            if BATCH_FILE_CAPTION:
-                try:
-                    f_caption=BATCH_FILE_CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='' if f_caption is None else f_caption)
-                except Exception as e:
-                    logger.exception(e)
-                    f_caption=f_caption
-            if f_caption is None:
-                f_caption = f"{title}"
+if data.split("-", 1)[0] == "BATCH":
+    sts = await message.reply("Please wait...")
+
+    batch_file_id = data.split("-", 1)[1]
+
+    msgs = BATCH_FILES.get(batch_file_id)
+
+    if not msgs:
+        file = await client.download_media(batch_file_id)
+
+        try:
+            with open(file) as file_data:
+                msgs = json.loads(file_data.read())
+                BATCH_FILES[batch_file_id] = msgs
+        except Exception:
+            await sts.edit("❌ Unable to open batch.")
+            return
+        finally:
             try:
-                await client.send_cached_media(
-                    chat_id=message.from_user.id,
-                    file_id=msg.get("file_id"),
-                    caption=f_caption,
-                    protect_content=msg.get('protect', False),
-                    )
-            except FloodWait as e:
-                await asyncio.sleep(e.x)
-                logger.warning(f"Floodwait of {e.x} sec.")
-                await client.send_cached_media(
-                    chat_id=message.from_user.id,
-                    file_id=msg.get("file_id"),
-                    caption=f_caption,
-                    protect_content=msg.get('protect', False),
-                    )
-            except Exception as e:
-                logger.warning(e, exc_info=True)
-                continue
-            await asyncio.sleep(1) 
-        await sts.delete()
-        return
+                os.remove(file)
+            except:
+                pass
+
+    for item in msgs:
+        try:
+            copied = await client.copy_message(
+                chat_id=message.from_user.id,
+                from_chat_id=item["chat_id"],
+                message_id=item["message_id"]
+            )
+
+            asyncio.create_task(delete_after_10_minutes(copied))
+
+            await asyncio.sleep(1)
+
+        except FloodWait as e:
+            await asyncio.sleep(e.value)
+
+        except Exception as e:
+            logger.exception(e)
+            continue
+
+    await sts.delete()
+    return
+
     elif data.split("-", 1)[0] == "DSTORE":
         sts = await message.reply("Please wait")
         b_string = data.split("-", 1)[1]
