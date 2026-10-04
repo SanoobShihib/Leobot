@@ -40,6 +40,7 @@ load_dotenv("./dynamic.env", override=True, encoding="utf-8")
 
 BATCH_FILES = {}
 ADD_FILTER_STATE = {}
+BATCH_CREATE_STATE = {}
 DS_REACT = ["⚡"]
 
 should_run_check_loop_sub = False
@@ -109,12 +110,99 @@ async def send_file(client, query, ident, file_id):
     )
     asyncio.create_task(delete_after_2_minutes(ok))
 
-@Client.on_message(filters.command("batch") & filters.private)
+@Client.on_message(filters.command("batch") & filters.private & filters.user(ADMINS))
 async def batch_command(client, message):
+
+    BATCH_CREATE_STATE[message.from_user.id] = []
+
     await message.reply_text(
-        "📦 Batch command is working!\n\n"
-        "Send the batch link to continue."
+        "📦 <b>Batch Mode Started!</b>\n\n"
+        "📤 Send your files one by one.\n"
+        "✅ After sending all files, send /finish",
+        parse_mode=enums.ParseMode.HTML
     )
+
+@Client.on_message(
+    (filters.document | filters.video | filters.audio | filters.animation | filters.text)
+    & filters.private
+    & filters.user(ADMINS)
+)
+async def batch_file_handler(client, message):
+
+    user_id = message.from_user.id
+
+    if user_id not in BATCH_CREATE_STATE:
+        return
+
+    media = (
+        message.document
+        or message.video
+        or message.audio
+        or message.animation
+        or message.text
+    )
+
+    BATCH_CREATE_STATE[user_id].append({
+        "file_id": media.file_id,
+        "title": getattr(media, "file_name", None) or "File",
+        "size": getattr(media, "file_size", 0),
+        "caption": message.caption or "",
+        "protect": False
+    })
+
+    count = len(BATCH_CREATE_STATE[user_id])
+
+    await message.reply_text(
+        f"✅ File {count} added to batch."
+    )
+
+@Client.on_message(filters.command("finish") & filters.private & filters.user(ADMINS))
+async def finish_batch(client, message):
+
+    user_id = message.from_user.id
+    files = BATCH_CREATE_STATE.get(user_id, [])
+
+    if not files:
+        await message.reply_text("❌ Batch-ൽ files ഒന്നും ഇല്ല.")
+        return
+
+    await message.reply_text("⏳ Batch link create ചെയ്യുന്നു...")
+
+    batch_data = json.dumps(files, ensure_ascii=False)
+
+    file_name = f"batch_{user_id}.json"
+
+    with open(file_name, "w", encoding="utf-8") as f:
+        f.write(batch_data)
+
+    sent = await client.send_document(
+        chat_id=user_id,
+        document=file_name,
+        caption="📦 Batch data"
+    )
+
+    batch_file_id = sent.document.file_id
+
+    batch_link = f"https://t.me/{temp.U_NAME}?start=BATCH-{batch_file_id}"
+
+    keyboard = InlineKeyboardMarkup([
+        [InlineKeyboardButton("🔗 OPEN BATCH", url=batch_link)]
+    ])
+
+    await message.reply_text(
+        f"✅ <b>Batch Created Successfully!</b>\n\n"
+        f"📁 Files: {len(files)}\n"
+        f"🔗 താഴെയുള്ള button അമർത്തി batch തുറക്കാം.",
+        reply_markup=keyboard,
+        parse_mode=enums.ParseMode.HTML
+    )
+
+    BATCH_CREATE_STATE.pop(user_id, None)
+
+    try:
+        os.remove(file_name)
+    except:
+        pass
    
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
