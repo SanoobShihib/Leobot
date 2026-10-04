@@ -108,6 +108,13 @@ async def send_file(client, query, ident, file_id):
         reply_markup=reply_markup
     )
     asyncio.create_task(delete_after_2_minutes(ok))
+
+@Client.on_message(filters.command("batch") & filters.private)
+async def batch_command(client, message):
+    await message.reply_text(
+        "📦 Batch command is working!\n\n"
+        "Send the batch link to continue."
+    )
    
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
