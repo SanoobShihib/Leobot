@@ -197,12 +197,36 @@ async def get_bad_files(query, file_type=None, filter=False):
 
     return files_media1, files_media2, total_results
         
-async def get_search_results(query, file_type=None, max_results=10, offset=0, filter=False):
-    """For given query return (results, next_offset)"""
+async def get_search_results(query, file_type=None, max_results=10, offset=0, filter=False, exact=False):
+    """For given query return search results."""
 
     query = query.strip()
 
-    if not query:
+    if exact:
+        # Exact title search:
+        # Love -> Love only (not Poisoned Love / Love Again)
+        # Love 2020 -> Love 2020
+        separators = r"[\s._+\-()[\]]+"
+        metadata = (
+            r"(?:\(?\s*(?:19|20)\d{2}\s*\)?|"
+            r"(?:2160|1080|720|480)p|4k|web[- .]?dl|webrip|web[- .]?rip|"
+            r"bluray|brrip|hdrip|dvdrip|hdtv|x264|x265|hevc|aac|"
+            r"ddp(?:\s*5\.1)?|5\.1|10bit|remux)"
+        )
+
+        if not query:
+            raw_pattern = r"^$"
+        else:
+            parts = separators.join(
+                re.escape(part)
+                for part in query.split()
+            )
+            raw_pattern = (
+                r"^" + parts +
+                r"(?:" + separators + metadata + r")*" +
+                r"(?:\.[A-Za-z0-9]{2,6})?$"
+            )
+    elif not query:
         raw_pattern = '.'
     elif ' ' not in query:
         raw_pattern = r'(\b|[\.\+\-_])' + query + r'(\b|[\.\+\-_])'
