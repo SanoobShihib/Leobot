@@ -434,9 +434,9 @@ if data.split("-", 1)[0] == "BATCH":
 
 elif data.split("-", 1)[0] == "DSTORE":
      sts = await message.reply("Please wait")
-        b_string = data.split("-", 1)[1]
-        decoded = (base64.urlsafe_b64decode(b_string + "=" * (-len(b_string) % 4))).decode("ascii")
-        try:
+     b_string = data.split("-", 1)[1]
+     decoded = (base64.urlsafe_b64decode(b_string + "=" * (-len(b_string) % 4))).decode("ascii")
+     try:
             f_msg_id, l_msg_id, f_chat_id, protect = decoded.split("_", 3)
         except:
             f_msg_id, l_msg_id, f_chat_id = decoded.split("_", 2)
