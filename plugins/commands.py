@@ -220,60 +220,35 @@ async def batch_file_handler(client, message):
     )
 
 
-@Client.on_message(
-    filters.command("finish") &
-    filters.private &
-    filters.user(ADMINS)
-)
+@Client.on_message(filters.command("finish") & filters.private & filters.user(ADMINS))
 async def finish_batch(client, message):
-
     user_id = message.from_user.id
     files = BATCH_CREATE_STATE.get(user_id, [])
 
     if not files:
-        await message.reply_text(
-            "❌ Batch-ൽ files ഒന്നും ഇല്ല."
-        )
+        await message.reply_text("❌ Batch-ൽ files ഒന്നും ഇല്ല.")
         return
 
-    await message.reply_text(
-        "⏳ Batch link create ചെയ്യുന്നു..."
-    )
+    await message.reply_text("⏳ Batch link create ചെയ്യുന്നു...")
 
-    batch_data = json.dumps(
-        files,
-        ensure_ascii=False
-    )
-
+    batch_data = json.dumps(files, ensure_ascii=False)
     file_name = f"batch_{user_id}.json"
 
-    with open(
-        file_name,
-        "w",
-        encoding="utf-8"
-    ) as f:
+    with open(file_name, "w", encoding="utf-8") as f:
         f.write(batch_data)
 
+    # പ്രൈവറ്റ് ചാറ്റിന് പകരം LOG_CHANNEL-ലേക്ക് അയക്കുക
     sent = await client.send_document(
-        chat_id=user_id,
+        chat_id=LOG_CHANNEL,
         document=file_name,
-        caption="📦 Batch data"
+        caption=f"📦 Batch data created by {message.from_user.mention}"
     )
 
     batch_file_id = sent.document.file_id
-
-    batch_link = (
-        f"https://t.me/{temp.U_NAME}"
-        f"?start=BATCH-{batch_file_id}"
-    )
+    batch_link = f"https://t.me/{temp.U_NAME}?start=BATCH-{batch_file_id}"
 
     keyboard = InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton(
-                "🔗 OPEN BATCH",
-                url=batch_link
-            )
-        ]
+        [InlineKeyboardButton("🔗 OPEN BATCH", url=batch_link)]
     ])
 
     await message.reply_text(
@@ -284,16 +259,12 @@ async def finish_batch(client, message):
         parse_mode=enums.ParseMode.HTML
     )
 
-    BATCH_CREATE_STATE.pop(
-        user_id,
-        None
-    )
+    BATCH_CREATE_STATE.pop(user_id, None)
 
     try:
         os.remove(file_name)
-    except:
+    except Exception:
         pass
-
 
 @Client.on_message(
     filters.command("start") &
