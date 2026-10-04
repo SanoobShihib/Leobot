@@ -697,7 +697,7 @@ CLICK 📌 ᴊᴏɪɴ ᴛᴏ ʀᴇQᴜᴇꜱᴛ ᴄʜᴀɴɴᴇʟ 📌 AND THEN 
         return
 
     if len(message.command) < 2:
-    return
+        return
 
     data = message.command[1]
 
