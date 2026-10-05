@@ -39,6 +39,129 @@ from dotenv import load_dotenv
 load_dotenv("./dynamic.env", override=True, encoding="utf-8")
 
 BATCH_FILES = {}
+
+# ==================== ADMIN BATCH SYSTEM ====================
+
+ADMIN_BATCH_FILES = {}
+
+
+@Client.on_message(filters.command("batch") & filters.private & filters.user(ADMINS))
+async def admin_batch_start(client, message):
+    ADMIN_BATCH_FILES[message.from_user.id] = []
+
+    await message.reply_text(
+        "📤 Send your files one by one.\n\n"
+        "Send multiple files and when finished use /finish."
+    )
+
+
+@Client.on_message(
+    filters.private
+    & filters.user(ADMINS)
+    & (filters.document | filters.video | filters.audio | filters.photo)
+)
+async def admin_batch_collect(client, message):
+    user_id = message.from_user.id
+
+    if user_id not in ADMIN_BATCH_FILES:
+        return
+
+    media = None
+
+    if message.document:
+        media = message.document
+    elif message.video:
+        media = message.video
+    elif message.audio:
+        media = message.audio
+    elif message.photo:
+        media = message.photo
+
+    if not media:
+        return
+
+    file_name = getattr(media, "file_name", None)
+
+    if not file_name:
+        if message.photo:
+            file_name = "Photo"
+        elif message.video:
+            file_name = "Video"
+        elif message.audio:
+            file_name = "Audio"
+        else:
+            file_name = "File"
+
+    ADMIN_BATCH_FILES[user_id].append({
+        "file_id": media.file_id,
+        "title": file_name,
+        "size": getattr(media, "file_size", 0),
+        "caption": message.caption or "",
+        "protect": False
+    })
+
+    total = len(ADMIN_BATCH_FILES[user_id])
+
+    await message.reply_text(
+        f"✅ File added successfully.\n\n"
+        f"📦 Total files: {total}"
+    )
+
+
+@Client.on_message(filters.command("finish") & filters.private & filters.user(ADMINS))
+async def admin_batch_finish(client, message):
+
+    user_id = message.from_user.id
+
+    if user_id not in ADMIN_BATCH_FILES:
+        return await message.reply_text(
+            "❌ No active batch.\n\n"
+            "First use /batch"
+        )
+
+    files = ADMIN_BATCH_FILES.get(user_id, [])
+
+    if not files:
+        del ADMIN_BATCH_FILES[user_id]
+
+        return await message.reply_text(
+            "❌ No files received.\n\n"
+            "Use /batch and send your files first."
+        )
+
+    # Only allow /finish admin
+    if len(message.command) < 2 or message.command[1].lower() != "admin":
+        return await message.reply_text(
+            "❌ Please use:\n\n"
+            "/finish admin"
+        )
+
+    # Generate unique batch ID
+    batch_id = str(random.randint(10000000, 99999999))
+
+    # Save files
+    BATCH_FILES[batch_id] = files
+
+    # Get bot username
+    bot_info = await client.get_me()
+
+    batch_link = f"https://t.me/{bot_info.username}?start=BATCH-{batch_id}"
+
+    total_files = len(files)
+
+    # Clear current admin batch
+    del ADMIN_BATCH_FILES[user_id]
+
+    await message.reply_text(
+        f"✅ <b>Batch completed!</b>\n\n"
+        f"📦 <b>Total Files:</b> {total_files}\n\n"
+        f"🔗 <b>Batch Link:</b>\n"
+        f"<code>{batch_link}</code>\n\n"
+        f"👤 User can click this link to receive all files.",
+        parse_mode=enums.ParseMode.HTML,
+        disable_web_page_preview=True
+    )
+    
 ADD_FILTER_STATE = {}
 DS_REACT = ["⚡"]
 
