@@ -51,7 +51,7 @@ async def admin_batch_start(client, message):
 
     await message.reply_text(
         "📤 Send your files one by one.\n\n"
-        "Send multiple files and when finished use /finish."
+        "Send multiple files and when finished use /finish admin."
     )
 
 
@@ -103,7 +103,7 @@ async def admin_batch_collect(client, message):
     total = len(ADMIN_BATCH_FILES[user_id])
 
     await message.reply_text(
-        f"✅ File added successfully.\n\n"
+        f"✅ File added successfully./finish admin\n\n"
         f"📦 Total files: {total}"
     )
 
