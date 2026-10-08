@@ -268,6 +268,7 @@ Kuruthi 2019
         message.text = search 
         await auto_filter(client, message) 
         return
+
          
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [
@@ -341,6 +342,44 @@ Kuruthi 2019
         await sts.delete()
         return
     elif data.split("-", 1)[0] == "DSTORE":
+        # Batch link - Subscribe check
+        if REQ_CHANNEL1 and not await is_requested_one(client, message):
+            btn = [[
+                InlineKeyboardButton(
+                    "📌 ᴊᴏɪɴ ᴛᴏ ʀᴇQᴜᴇꜱᴛ ᴄʜᴀɴɴᴇʟ 📌",
+                    url=client.req_link1
+                )
+            ]]
+
+            if REQ_CHANNEL2 and not await is_requested_two(client, message):
+                btn.append([
+                    InlineKeyboardButton(
+                        "📌 ᴊᴏɪɴ ᴛᴏ ʀᴇQᴜᴇꜱᴛ ᴄʜᴀɴɴᴇʟ 📌",
+                        url=client.req_link2
+                    )
+                ])
+
+            btn.append([
+                InlineKeyboardButton(
+                    "🔄 ᴛʀʏ ᴀɢᴀɪɴ 🔄",
+                    url=f"https://t.me/{temp.U_NAME}?start={data}"
+                )
+            ])
+
+            await client.send_message(
+                chat_id=message.from_user.id,
+                text="**♦️ ʀᴇᴀᴅ ᴛʜɪꜱ ɪɴꜱᴛʀᴜᴄᴛɪᴏɴ ♦️\n\n"
+                     "നിങ്ങൾക്ക് Batch Files ലഭിക്കണമെങ്കിൽ ഞങ്ങളുടെ ചാനലുകളിൽ Join Request അയയ്ക്കണം.\n\n"
+                     "ചാനലിൽ Request ചെയ്ത ശേഷം 🔄 ᴛʀʏ ᴀɢᴀɪɴ 🔄 അമർത്തുക.**",
+                reply_markup=InlineKeyboardMarkup(btn),
+                parse_mode=enums.ParseMode.MARKDOWN
+            )
+
+            check = await check_loop_sub1(client, message)
+
+            if not check:
+                return False
+
         sts = await message.reply("Please wait")
         b_string = data.split("-", 1)[1]
         decoded = (base64.urlsafe_b64decode(b_string + "=" * (-len(b_string) % 4))).decode("ascii")
