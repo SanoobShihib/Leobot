@@ -352,7 +352,7 @@ Kuruthi 2019
         diff = int(l_msg_id) - int(f_msg_id)
         async for msg in client.iter_messages(int(f_chat_id), int(l_msg_id), int(f_msg_id)):
             if msg.media:
-                media = getattr(msg, msg.media)
+                media = getattr(msg, str(msg.media), None)
                 if BATCH_FILE_CAPTION:
                     try:
                         f_caption=BATCH_FILE_CAPTION.format(file_name=getattr(media, 'file_name', ''), file_size=getattr(media, 'file_size', ''), file_caption=getattr(msg, 'caption', ''))
