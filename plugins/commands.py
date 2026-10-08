@@ -547,7 +547,7 @@ async def finish_admin_batch(client, message):
         data.encode()
     ).decode().rstrip("=")
 
-   link = f"https://t.me/{bot_info.username}?start=DSTORE-{encoded}"
+    link = f"https://t.me/{bot_info.username}?start=DSTORE-{encoded}"
 
     await message.reply_text(
         "🎉 <b>Batch Finished!</b>\n\n"
