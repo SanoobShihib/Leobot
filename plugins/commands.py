@@ -40,6 +40,7 @@ load_dotenv("./dynamic.env", override=True, encoding="utf-8")
 
 BATCH_FILES = {}
 ADD_FILTER_STATE = {}
+ADMIN_BATCH_FILES = {}
 DS_REACT = ["⚡"]
 
 should_run_check_loop_sub = False
@@ -480,6 +481,87 @@ async def channel_info(bot, message):
             f.write(text)
         await message.reply_document(file)
         os.remove(file)
+
+# ================= ADMIN PM BATCH =================
+
+@Client.on_message(filters.command("batch") & filters.private & filters.user(ADMINS))
+async def start_admin_batch(client, message):
+    user_id = message.from_user.id
+
+    ADMIN_BATCH_FILES[user_id] = []
+
+    await message.reply_text(
+        "📦 Batch Mode Started!\n\n"
+        "ഇനി files ഒന്നൊന്നായി അയയ്ക്കുക.\n"
+        "എല്ലാ files-ഉം അയച്ച ശേഷം /finish അയയ്ക്കുക."
+    )
+
+
+@Client.on_message(
+    (filters.document | filters.video | filters.audio) &
+    filters.private &
+    filters.user(ADMINS)
+)
+async def collect_admin_batch_files(client, message):
+    user_id = message.from_user.id
+
+    if user_id not in ADMIN_BATCH_FILES:
+        return
+
+    ADMIN_BATCH_FILES[user_id].append(message.id)
+
+    count = len(ADMIN_BATCH_FILES[user_id])
+
+    await message.reply_text(
+        f"✅ File added to batch\n\n"
+        f"📁 Total files: {count}\n\n"
+        f"കൂടുതൽ files അയയ്ക്കാം.\n"
+        f"എല്ലാം കഴിഞ്ഞാൽ /finish അയയ്ക്കുക."
+    )
+
+
+@Client.on_message(filters.command("finish") & filters.private & filters.user(ADMINS))
+async def finish_admin_batch(client, message):
+    user_id = message.from_user.id
+
+    file_ids = ADMIN_BATCH_FILES.get(user_id)
+
+    if not file_ids:
+        await message.reply_text(
+            "❌ Batch-ൽ files ഒന്നും ഇല്ല.\n\n"
+            "ആദ്യം /batch അയയ്ക്കുക."
+        )
+        return
+
+    bot_info = await client.get_me()
+
+    links = []
+
+    for msg_id in file_ids:
+        data = f"DSTORE-{msg_id}-{msg_id}-{user_id}-batch"
+
+        encoded = base64.urlsafe_b64encode(
+            data.encode()
+        ).decode().rstrip("=")
+
+        link = f"https://t.me/{bot_info.username}?start={encoded}"
+
+        links.append(link)
+
+    text = (
+        "🎉 Batch Finished!\n\n"
+        f"📦 Total Files: {len(links)}\n\n"
+    )
+
+    for i, link in enumerate(links, 1):
+        text += f"📁 File {i}: {link}\n"
+
+    await message.reply_text(
+        text,
+        disable_web_page_preview=True
+    )
+
+    ADMIN_BATCH_FILES.pop(user_id, None)
 
 
 @Client.on_message(filters.command('logs') & filters.user(ADMINS))
