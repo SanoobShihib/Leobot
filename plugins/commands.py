@@ -286,6 +286,19 @@ Kuruthi 2019
         )
         return
     data = message.command[1]
+
+    try:
+    decoded_data = (
+        base64.urlsafe_b64decode(
+            data + "=" * (-len(data) % 4)
+        )
+    ).decode("ascii")
+
+    if decoded_data.startswith("DSTORE-"):
+        data = decoded_data
+except:
+    pass
+    
     try:
         pre, file_id = data.split('_', 1)
     except:
