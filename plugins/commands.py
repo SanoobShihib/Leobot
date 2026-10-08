@@ -533,31 +533,25 @@ async def finish_admin_batch(client, message):
         )
         return
 
+    # First and last file message IDs
+    first_msg_id = file_ids[0]
+    last_msg_id = file_ids[-1]
+
     bot_info = await client.get_me()
 
-    links = []
+    # ONE link for ALL files
+    data = f"DSTORE-{first_msg_id}-{last_msg_id}-{user_id}-batch"
 
-    for msg_id in file_ids:
-        data = f"DSTORE-{msg_id}-{msg_id}-{user_id}-batch"
+    encoded = base64.urlsafe_b64encode(
+        data.encode()
+    ).decode().rstrip("=")
 
-        encoded = base64.urlsafe_b64encode(
-            data.encode()
-        ).decode().rstrip("=")
-
-        link = f"https://t.me/{bot_info.username}?start={encoded}"
-
-        links.append(link)
-
-    text = (
-        "🎉 Batch Finished!\n\n"
-        f"📦 Total Files: {len(links)}\n\n"
-    )
-
-    for i, link in enumerate(links, 1):
-        text += f"📁 File {i}: {link}\n"
+    link = f"https://t.me/{bot_info.username}?start={encoded}"
 
     await message.reply_text(
-        text,
+        "🎉 <b>Batch Finished!</b>\n\n"
+        f"📦 Total Files: <b>{len(file_ids)}</b>\n\n"
+        f"🔗 <b>Batch Link:</b>\n{link}",
         disable_web_page_preview=True
     )
 
