@@ -541,7 +541,7 @@ async def finish_admin_batch(client, message):
     bot_info = await client.get_me()
 
     # ONE link for ALL files
-    data = f"DSTORE-{first_msg_id}_{last_msg_id}_{user_id}_batch"
+    data = f"{first_msg_id}_{last_msg_id}_{user_id}_batch"
 
     encoded = base64.urlsafe_b64encode(
         data.encode()
