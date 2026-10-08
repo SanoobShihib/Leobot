@@ -133,12 +133,12 @@ Kuruthi 2019
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [[
             InlineKeyboardButton(
-                '👥 Join Our Group',
+                '👥 ᴊᴏɪɴ ᴛᴏ ɢʀᴏᴜᴘ 👥',
                 url='https://t.me/+Ik14BdOewjQzYjI1'
             )
         ],[
             InlineKeyboardButton(
-                '📢 Join to Update Channel',
+                '📌 ᴊᴏɪɴ ᴛᴏ ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ 📌',
                 url='https://t.me/Clmainchannel'
             )
         ]]
@@ -177,12 +177,12 @@ Kuruthi 2019
     if len(message.command) != 2 or message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [[
             InlineKeyboardButton(
-                '👥 Join Our Group',
+                '👥 ᴊᴏɪɴ ᴛᴏ ɢʀᴏᴜᴘ 👥',
                 url='https://t.me/+Ik14BdOewjQzYjI1'
             )
         ],[
             InlineKeyboardButton(
-                '📢 Join to Update Channel',
+                '📌 ᴊᴏɪɴ ᴛᴏ ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ 📌',
                 url='https://t.me/Clmainchannel'
             )
         ]] 
