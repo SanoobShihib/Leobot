@@ -132,12 +132,17 @@ Kuruthi 2019
         return   
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [
-                InlineKeyboardButton('👥 ᴊᴏɪɴ ᴏᴜʀ ɢʀᴏᴜᴘ 👥', url=f'https://t.me/+Ik14BdOewjQzYjI1')
-               ],[
-                InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ 📌', url=f'https://t.me/Clmainchannel')
-              ],[
-                InlineKeyboardButton('👥 ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ 👥', url="https://t.me/clsupportgroup"),
-        ]       
+    InlineKeyboardButton(
+        '👥 Join Our Group',
+        url='https://t.me/+Ik14BdOewjQzYjI1'
+    )
+],
+[
+    InlineKeyboardButton(
+        '📢 Join to Update Channel',
+        url='https://t.me/Clmainchannel'
+    )
+]      
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply(script.START_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME), reply_markup=reply_markup)
         await asyncio.sleep(2) # 😢 https://github.com/EvamariaTG/EvaMaria/blob/master/plugins/p_ttishow.py#L17 😬 wait a bit, before checking.
@@ -152,14 +157,17 @@ Kuruthi 2019
     # For Achu Vj
     if len(message.command) != 2 or message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [[
-            InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘꜱ ➕', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
-            ],[
-            InlineKeyboardButton('🔍 ꜱᴇᴀʀᴄʜ 🔎', switch_inline_query_current_chat=''),
-            InlineKeyboardButton('📣 ᴜᴘᴅᴀᴛᴇꜱ 📣', url='https://t.me/Clmainchannel')
-            ],[
-            InlineKeyboardButton('ℹ️ ʜᴇʟᴘ ℹ️', callback_data='help'),
-            InlineKeyboardButton('📍 ᴀʙᴏᴜᴛ 📍', callback_data='about')
-        ]]
+            InlineKeyboardButton(
+                '👥 Join Our Group',
+                url='https://t.me/+Ik14BdOewjQzYjI1'
+            )
+        ],[
+            InlineKeyboardButton(
+                '📢 Join to Update Channel',
+                url='https://t.me/Clmainchannel'
+            )
+        ]] 
+        
         reply_markup = InlineKeyboardMarkup(buttons)
         caption_text = script.START_TXT.format(
             message.from_user.mention,
