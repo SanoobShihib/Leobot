@@ -294,7 +294,7 @@ Kuruthi 2019
         ).decode("ascii")
 
         if decoded_data.startswith("DSTORE-"):
-            data = decoded_data
+            data = "DSTORE-" + data
     except:
         pass    
     try:
